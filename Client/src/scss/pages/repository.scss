@@ -1,0 +1,124 @@
+@import "../config.scss";
+
+#repository-name {
+    padding: .6em .8em;
+
+    background: white;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px 4px 0 0;
+
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+#buttons {
+    background: white;
+    border: 1px solid #c8c8c8;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+
+    .repo-button {
+        display: inline-block;
+        padding: .6em .8em;
+        border-right: 1px solid #c8c8c8;
+
+        color: black;
+        text-decoration: none;
+
+        cursor: pointer;
+
+        &:first-child {
+            border-bottom-left-radius: 3px;
+        }
+
+        &:hover {
+            background: #fafafa;
+        }
+    }
+
+    #repository-clone-url {
+        display: inline-block;
+        margin-top: .65em;
+        margin-right: .65em;
+        font-size: .7em;
+    }
+}
+
+#contents {
+    margin-top: 2em;
+
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+
+    background: white;
+
+    .contents-section {
+        border: none;
+        background: transparent;
+        border-bottom: 1px solid #c8c8c8;
+        width: 100%;
+
+        &:not(.no-padding) {
+            padding: .6em .8em;
+            width: calc(100% - 1.6em);
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .filename {
+            font-weight: 700;
+
+            text-decoration: none;
+
+            &:not(.no-link) {
+                color: $COLOUR_SECONDARY;
+
+                &:hover {
+                    color: #e64a19;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .file-size {
+            float: right;
+
+            font-family: $MONO_FONT;
+            color: $COLOUR-xdark;
+        }
+
+        .commit {
+            float: right;
+
+            color: black;
+            text-decoration: none;
+
+            .commit-name:after {
+                content: " (";
+            }
+
+            .commit-time {
+                &:before {
+                    content: ", "
+                }
+
+                &:after {
+                    content: ")";
+                }
+            }
+
+            .commit-id {
+                font-family: $MONO_FONT;
+            }
+
+            &:hover {
+                .commit-id {
+                    color: #e64a19;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

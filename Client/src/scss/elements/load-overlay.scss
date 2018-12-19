@@ -1,0 +1,11 @@
+@import "../config";
+
+#load-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $BACKGROUND_COLOUR;
+  z-index: 500;
+}

@@ -1,0 +1,304 @@
+@import "../config.scss";
+
+input[type=checkbox] {
+    margin-right: .4em;
+
+    position: absolute;
+    left: -200vw;
+
+    display: block;
+
+    &:focus + label, &:active + label {
+        &::before {
+            border: 1px solid $COLOUR_PRIMARY-light;
+        }
+    }
+
+    + label {
+        position: relative;
+        padding-left: 1.95em;
+
+        cursor: pointer;
+
+        user-select: none;
+
+        display: block;
+        margin-bottom: 1.3em;
+
+        &::before {
+            content: "";
+
+            position: absolute;
+            top: -.2em;
+            left: 0;
+
+            width: 1.25em;
+            height: 1.25em;
+
+            border: 1px solid $COLOUR-dark;
+            border-radius: .21em;
+
+            background: white;
+
+            transition: $TIME-short $EASE;
+        }
+
+        &::after {
+            content: "\e800";
+            font-family: fontello, serif;
+            font-size: 1em;
+
+            text-align: center;
+            line-height: 1.25em;
+
+            position: absolute;
+            top: -.2em;
+            left: 0;
+
+            width: 1.25em;
+            max-width: 1.25em;
+            overflow: visible;
+
+            border: 1px solid $COLOUR_PRIMARY;
+            border-radius: .21em;
+
+            color: white;
+            background: $COLOUR_PRIMARY-light;
+
+            opacity: 0;
+            transition: $TIME-short $EASE;
+        }
+    }
+
+    &:checked + label::after {
+        opacity: 1;
+
+        font-size: 1em;
+    }
+    &:not(:checked) + label::after {
+        opacity: 0;
+
+        transform: scale(1.3);
+    }
+
+    &:disabled + label::before {
+        background: $COLOUR-dark;
+    }
+}
+
+input[type=radio] {
+    margin-right: .4em;
+
+    position: relative;
+    left: -200vw;
+
+    display: block;
+
+    &:focus + label, &:active + label {
+        &::before {
+            border: 1px solid $COLOUR_PRIMARY-light;
+        }
+    }
+
+    &::after {
+        // We need another element to place after.
+        content: "\2022";
+
+        position: relative;
+        left: calc(200vw + .1em);
+        top: -.05em;
+
+        font-size: 2.5em;
+        color: white;
+        text-shadow: 0 0 .1em rgba($COLOUR-dark, 0.5);
+
+        z-index: 1;
+
+        width: 1.25em;
+        height: 1.25em;
+
+        pointer-events: none;
+    }
+
+    &:not(:checked) {
+        transform: scale(0);
+    }
+
+    + label {
+        position: relative;
+        padding-left: 1.95em;
+
+        cursor: pointer;
+
+        user-select: none;
+
+        display: block;
+        margin-bottom: 1.3em;
+
+        &::before {
+            content: "";
+
+            position: absolute;
+            top: -.2em;
+            left: 0;
+
+            width: 1.25em;
+            height: 1.25em;
+
+            border: 1px solid $COLOUR-dark;
+            border-radius: 50%;
+
+            background: #fff;
+
+            transition: $TIME-short $EASE;
+        }
+
+        &::after {
+            content: "\2022";
+            font-size: 1em;
+
+            text-align: center;
+            line-height: 1.25em;
+
+            position: absolute;
+            top: -.2em;
+            left: 0;
+
+            width: 1.25em;
+
+            border: 1px solid $COLOUR_PRIMARY;
+            border-radius: 50%;
+
+            color: white;
+            background: $COLOUR_PRIMARY-light;
+
+            opacity: 0;
+            transition: $TIME-short $EASE;
+        }
+    }
+
+    &:checked + label::after {
+        opacity: 1;
+    }
+
+    &:not(:checked) + label::after {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    &:disabled + label::before {
+        background: $COLOUR-dark;
+    }
+}
+
+input[type=text], input[type=password], input[type=email] {
+    border: 1px solid $COLOUR-dark;
+    border-radius: .21em;
+
+    display: block;
+    padding: .5em .8em .4em;
+    background: white;
+
+    cursor: text;
+
+    &:not(.no-label) {
+        margin-top: 2em;
+    }
+
+    font-size: 1em;
+
+    transition: $TIME-short $EASE;
+
+    + label + div input {
+        margin-top: 0;
+    }
+
+    + label {
+        color: black;
+
+        font-size: .7em;
+
+        position: relative;
+        top: -4.57em - .2em;
+
+        padding: .2em;
+        margin-bottom: 2.33em;
+
+        border-radius: .2em .2em 0 0;
+
+        transition: $TIME-short $EASE;
+    }
+
+    &:focus:not(.no-label) {
+        outline: none;
+
+        border-color: $COLOUR_PRIMARY-light;
+        border-top-left-radius: 0;
+
+        + label {
+            background: $COLOUR_PRIMARY-light;
+            color: white;
+        }
+    }
+
+    &:hover {
+        border: 1px solid $COLOUR_PRIMARY-dark;
+    }
+
+    &:hover:focus + label {
+        background: $COLOUR_PRIMARY-dark;
+    }
+
+    &.full-width {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    &:disabled {
+        cursor: default;
+
+        background: grayscale($COLOUR_PRIMARY-light);
+        border-color: grayscale($COLOUR_PRIMARY);
+    }
+}
+
+button, a.button {
+    border: 1px solid $COLOUR-dark;
+    border-radius: .21em;
+
+    padding: .5em .8em;
+
+    background: white;
+
+    cursor: pointer;
+
+    transition: $TIME-short $EASE;
+
+    &:focus {
+        outline: none;
+
+        border: 1px solid $COLOUR_PRIMARY-light;
+    }
+
+    &:disabled {
+        cursor: default;
+
+        background: grayscale($COLOUR_PRIMARY-light);
+        border-color: grayscale($COLOUR_PRIMARY);
+    }
+
+    &:not(:disabled):active {
+        border: 1px solid $COLOUR_PRIMARY-dark;
+        background: $COLOUR_PRIMARY-light;
+        color: white;
+    }
+
+    &.full-width {
+        width: 100%;
+    }
+}
+
+a.button {
+    color: black;
+    text-decoration: none;
+}

@@ -1,0 +1,32 @@
+// COLOURS
+$COLOUR_PRIMARY:       #ff7043;
+$COLOUR_PRIMARY-light: #ffab91;
+$COLOUR_PRIMARY-dark:  #e64a19;
+
+$COLOUR_SECONDARY:       #395bff;
+$COLOUR_SECONDARY-light: #7c99ff;
+$COLOUR_SECONDARY-dark: #314bbb;
+
+$COLOUR-light: rgba(white, .1);
+$COLOUR-dark:  rgba(black, .2);
+$COLOUR-xdark:  rgba(black, .5);
+
+$BACKGROUND_COLOUR: #fafafa;
+
+// SIZES
+$DISPLAY_MARGIN: 24vw;
+
+// TIMES
+$TIME:       250ms;
+$TIME-short: 100ms;
+$TIME-long:  500ms;
+$TIME-xlong: 750ms;
+
+// EASES
+$EASE:   ease-in-out;
+$LINEAR: linear;
+
+// FONTS
+$HEADER_FONT: Arvo, serif;
+$BODY_FONT: Lato, sans-serif;
+$MONO_FONT: "PT Mono", monospace;

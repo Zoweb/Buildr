@@ -1,0 +1,67 @@
+@import "../config";
+@import "../mixin";
+
+.window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+
+    width: 16em;
+
+    z-index: 100000;
+
+    .outer {
+        background: white;
+
+        border: 1px solid $COLOUR-dark;
+        border-radius: 2px;
+
+        width: 100%;
+
+        .content {
+            padding: .6em .6em .8em;
+
+            .message {
+                margin: 0;
+                text-align: center;
+            }
+        }
+
+        .title {
+            display: block;
+
+            padding: .4em .2em .4em 1em;
+            border-bottom: 1px solid $COLOUR-dark;
+
+            cursor: move;
+
+            font-size: .9em;
+            font-weight: 400;
+
+            background: $COLOUR_PRIMARY-dark;
+            color: white;
+
+            @include border-radius-tb(2px, 0);
+        }
+    }
+}
+
+.window-background-hider, .window-background-hider-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: #0004;
+}
+
+.window-background-hider {
+    z-index: 99999;
+}
+
+.window-background-hider-canvas {
+    z-index: 99998;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Setup</title>
+
+    <link href="scss/main.scss" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Arvo:700|Lato:400,400i,700,700i|PT+Mono" rel="stylesheet">
+</head>
+<body>
+<link href="elem/nav.html" rel="import" />
+
+<main>
+    <h2>Set up Buildr</h2>
+    <p>For security reasons, please don't enable public access to the server until setup is complete.</p>
+    <section id="step-1">
+        <p><strong>Step 1:</strong> Setup the root account</p>
+        <p>When you log in to <code>root</code>, you'll use an email just like any other account. Please set the
+            email now. <em>Make sure it is correct</em>, as you can't change it without logging in with it.</p>
+        <p>Make sure this email is secure, as anyone with access to it can do nearly anything on this website.</p>
+        <p>This email must be different to your user's email.</p>
+        <input type="email" id="root-email" placeholder="email@secure.com" />
+        <label for="root-email">Secure Email:</label><br/>
+        <button id="step-1-complete">Next</button>
+    </section>
+</main>
+
+<script src="ts/page/setup.ts"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+@import "mixin";
+@import "fonts";
+@import "config";
+
+@import "elements/navbar";
+@import "elements/form";
+@import "elements/load-overlay";
+@import "elements/window";
+@import "elements/socket-logger";
+
+body, html {
+    padding: 0;
+    margin: 0;
+
+    background: $BACKGROUND_COLOUR;
+}
+
+body, input, button, label {
+    font-family: $BODY_FONT;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 200;
+    font-family: $HEADER_FONT;
+}
+
+pre, code {
+    font-family: $MONO_FONT;
+}
+
+.title {
+    font-family: $HEADER_FONT;
+}
+
+main {
+    margin-left: $DISPLAY_MARGIN;
+    margin-right: $DISPLAY_MARGIN;
+    margin-top: $NAV_HEIGHT + 1.3em;
+
+    padding: 1em;
+}
+
+:not(pre) > code {
+    padding: .2em .3em;
+    border: 1px solid #c8c8c8;
+    border-radius: 2px;
+    background: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.info {
+    color: $COLOUR_SECONDARY-light;
+    font-style: italic;
+}
+
+.float-right {
+    float: right;
+}
