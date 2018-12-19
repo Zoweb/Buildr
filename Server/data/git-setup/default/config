@@ -1,0 +1,20 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = http://localhost:6223/repositories/_empty.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+[gitflow "branch"]
+	develop = develop
+	master = master
+[gitflow "prefix"]
+	feature = feature/
+	release = release/
+	hotfix = hotfix/
+	support = support/
+	versiontag = 
