@@ -1,0 +1,29 @@
+{
+    "global": {
+        "title": "Buildr"
+    },
+    "host": {
+        "backend": {
+            "protocol": "http",
+            "name": "192.168.1.29",
+            "port": {
+                "public": 6223,
+                "private": 6223
+            }
+        },
+        "frontend": {
+            "protocol": "http",
+            "name": "192.168.1.29",
+            "port": {
+                "public": 1234,
+                "private": 1234
+            }
+        }
+    },
+    "email": {
+        "host": "server71.web-hosting.com",
+        "user": "buildr@zoweb.me",
+        "pass": "BSyJV6q#v73qVWNyCTS*U^vV9$g7iQT2g6u87yvG",
+        "port": 465
+    }
+}
