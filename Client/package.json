@@ -1,0 +1,38 @@
+{
+    "name": "@buildit/client",
+    "dependencies": {
+        "@browser-bunyan/console-formatted-stream": "latest",
+        "browser-bunyan": "latest",
+        "bunyan": "latest",
+        "file-size": "latest",
+        "highlight.js": "^9.13.1",
+        "html2canvas": "latest",
+        "http-server": "^0.11.1",
+        "md5": "latest",
+        "runtypes": "latest",
+        "sha1": "latest",
+        "sha3": "latest",
+        "showdown": "latest",
+        "source-map": "latest"
+    },
+    "devDependencies": {
+        "@types/bunyan": "^1.8.5",
+        "@types/crypto-js": "^3.1.43",
+        "@types/md5": "^2.1.33",
+        "@types/showdown": "^1.7.5",
+        "base-64": "latest",
+        "parcel-bundler": "^1.10.3",
+        "posthtml-aria-tabs": "^1.0.0",
+        "posthtml-include": "^1.2.0",
+        "sass": "^1.15.1",
+        "ts-node": "^7.0.1",
+        "typescript": "^3.1.6"
+    },
+    "scripts": {
+        "dev": "parcel src/**/*.html",
+        "prod": "parcel build src/**/*.html",
+        "start": "http-server dist",
+        "postinstall": "echo \"WOKRING DIRECTORY\" is $PWD && dir src && yarn run prod",
+        "sourcemap": "ts-node sourcemap.ts"
+    }
+}
