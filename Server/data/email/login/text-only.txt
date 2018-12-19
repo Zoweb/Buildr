@@ -1,0 +1,5 @@
+Your magic link is ready!
+Copy the link below into your browser to log in to %resource=config:global.title%. It will expire in 10 minutes, and can
+only be used once.
+
+%resource=config:host.backend.protocol%://%resource=config:host.backend.name%:%resource=config:host.backend.port.public%/action/login?id=%loginId%
