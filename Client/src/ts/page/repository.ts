@@ -1,5 +1,5 @@
 import moment from "moment";
-import {Logger} from "../getLogger";
+
 import main from "./main";
 import {
     IRepositoryGetFiles,
@@ -42,19 +42,20 @@ const codeHighlightExtension = () => {
     ]
 };
 
-const logger = Logger.create("page/index");
 (async function() {
     if (location.hash.length < 5) location.assign("/index.html");
 
     const {client} = await main();
 
-    const repoName = location.hash.substr(1).split("/")[0];
+    const repoName = await client.get("repository:get-name", {
+        assumedName: location.hash.substr(1).split("/")[0]
+    });
 
     console.debug("Setting button URLs");
     (document.getElementById("issues-button") as HTMLAnchorElement).href = `#${repoName}/issues`;
     (document.getElementById("commits-button") as HTMLAnchorElement).href = `#${repoName}/commits`;
     (document.getElementById("branches-button") as HTMLAnchorElement).href = `#${repoName}/branches`;
-    (document.getElementById("code-button") as HTMLAnchorElement).href = `#${repoName}`;
+    (document.getElementById("code-button") as HTMLAnchorElement).href = `#${repoName}/dir/`;
 
     console.debug("Getting information for repository", repoName);
 
@@ -67,7 +68,11 @@ const logger = Logger.create("page/index");
         $repoCloneUrl.scrollLeft = $repoCloneUrl.scrollWidth;
     });
 
-    document.getElementById("repository-name").textContent = repoName;
+    const $repoName = document.getElementById("repository-name") as HTMLAnchorElement;
+    $repoName.classList.remove("loading-icon");
+
+    $repoName.textContent = repoName;
+    $repoName.href = `#${repoName}`;
 
     await runPage(client);
 
@@ -86,7 +91,11 @@ async function runPage(client: ResourceClient) {
 
     console.debug("Path:", repoPath);
 
-    if (repoPath.length === 0 || repoPath.startsWith("/dir/")) {
+    if (repoPath.length === 0) {
+        await runFileDisplay(client, "README.md", repoName);
+    }
+
+    if (repoPath.startsWith("/dir/")) {
         await runDirectoryDisplay(client, repoPath.substr("/dir/".length), repoName);
     }
 
@@ -104,7 +113,7 @@ async function getRepoFiles(client: ResourceClient, repoPath: string, repoName: 
     const files: IRepositoryGetFiles = await client.getTyped(RepositoryGetFiles, "repository:get-files", {
         repoName,
         repoPath
-    });
+    }).catch(err => location.assign("/404.html"));
 
     files.files.reverse();
 
@@ -247,7 +256,7 @@ async function runFileDisplay(client: ResourceClient, path: string, repoName: st
     const $footer = document.createElement("div");
     $footer.classList.add("contents-section");
     $footer.textContent =
-        `${await client.getResource("config:host.backend.protocol")}://${await client.getResource("config:host.backend.name")}:${await client.getResource("config:host.backend.port.public")}/rawrepo/?${repoName}/${thisFile.fullPath}`;
+        `${await client.getResource("config:host.backend.protocol")}://${await client.getResource("config:host.backend.name")}:${await client.getResource("config:host.backend.port.public")}/rawrepo/${repoName}/${thisFile.fullPath}`;
     $footer.addEventListener("click", () => selectElementText($footer));
 
     $contents.textContent = "";
