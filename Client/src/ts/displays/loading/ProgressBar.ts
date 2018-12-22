@@ -29,7 +29,7 @@ export default class ProgressBar extends EventEmitter {
     container: HTMLElement;
 
     get progress() { return this._progress }
-    set progress(value) {
+    set progress(value: number) {
         this._progress = value;
 
         this.updateProgress();
@@ -45,7 +45,7 @@ export default class ProgressBar extends EventEmitter {
         this.progress = 0;
     }
 
-    private estimateTime(progress) {
+    private estimateTime(progress: number) {
         return this._startTime + (this._lastUpdateTime - this._startTime) / this._lastUpdateProgress * progress;
     }
 
@@ -64,7 +64,7 @@ export default class ProgressBar extends EventEmitter {
         this.updateElements(estimatedTotalTime, estimatedCurrentTime);
     }
 
-    private updateElements(endTime, currentTime) {
+    private updateElements(endTime: number, currentTime: number) {
         const timeLeftString = moment(endTime).to(currentTime);
 
         this.container.setAttribute("data-progress-text", timeLeftString);
