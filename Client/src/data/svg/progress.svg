@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="90" height="30" version="1.1">
+    <polyline fill="#395bff" points="20,0,40,0,20,30,0,30"/>
+    <polyline fill="#395bff" points="50,0,70,0,50,30,30,30"/>
+    <polyline fill="#395bff" points="0,0,10,0,0,15"/>
+    <polyline fill="#395bff" points="60,30,80,0,90,0,90,15,80,30"/>
+</svg>

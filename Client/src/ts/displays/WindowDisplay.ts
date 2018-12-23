@@ -14,6 +14,9 @@ export default class WindowDisplay extends EventEmitter {
 
     readonly content = document.createElement("div");
 
+    get title() { return this._title.textContent }
+    set title(v) { this._title.textContent = v }
+
     constructor(title, hideBackground: boolean = false) {
         super();
 
