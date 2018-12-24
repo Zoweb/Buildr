@@ -20,7 +20,7 @@ import LocalState from "./tool/LocalState";
 import User from "./security/User";
 import {
     RepositoryCreate, RepositoryFileContents,
-    RepositoryGetFiles, RepositoryList,
+    RepositoryGetFiles, RepositoryGetName, RepositoryList,
     Resource,
     UsernameFieldUpdate
 } from "./responder-types";
@@ -291,6 +291,10 @@ const run = async function() {
             return {
                 contents: await gitServer.readFile(data["repository"], data["hash"], data["file"])
             }
+        });
+
+        authClient.respondWithoutUserCheck(RepositoryGetName, "repository:get-name", async (authCode, data) => {
+            return await gitServer.getRepositoryName(data["assumedName"])
         });
 
         authClient.respondWithoutUserCheck(RepositoryList, "repository:list", (authCode, data) => {
