@@ -8,7 +8,7 @@ import {
     existsAsync,
     mkdirpAsync,
     moveAsync,
-    readdirAsync,
+    readdirAsync, readFileAsync,
     statAsync,
     writeFileAsync
 } from "fs-extra-promise";
@@ -397,6 +397,13 @@ export default class GitServer extends EventEmitter {
         );
 
         return fileList.concat(uniqueFolderList);
+    }
+
+    getRepositoryName(assumedName: string) {
+        const repoName = GitServer.getRepositoryName(assumedName);
+        const repoDescriptionPath = path.join(this.dataDirectory, repoName, "description");
+
+        return readFileAsync(repoDescriptionPath, "utf8");
     }
 }
 
