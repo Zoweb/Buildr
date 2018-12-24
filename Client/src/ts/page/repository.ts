@@ -247,7 +247,7 @@ async function runFileDisplay(client: ResourceClient, path: string, repoName: st
         }
 
         // display a 404 error
-        location.hash = `${repoName}/404`;
+        location.hash = `${repoName}/error/404`;
     }
 
     const fileContentsResult = await client.get("repository:file-contents", {
@@ -286,6 +286,11 @@ async function runErrorDisplay(client: ResourceClient, name: string, type: strin
     console.debug("An error happened, displaying page.");
 
     const $contents = document.getElementById("contents");
+    $contents.textContent = "";
+
+    const $section = document.createElement("div");
+    $section.classList.add("contents-section");
+    $contents.appendChild($section);
 
     const $header = document.createElement("h3");
 
@@ -304,13 +309,16 @@ async function runErrorDisplay(client: ResourceClient, name: string, type: strin
 
     const $secondaryLink = document.createElement("a") as HTMLAnchorElement;
     $secondaryLink.textContent = "back";
+    $secondaryLink.href = "#";
     $secondaryLink.addEventListener("click", e => {
         e.preventDefault();
 
         history.back();
     });
+    $secondary.appendChild($secondaryLink);
 
-    $contents.appendChild($header);
+    $section.appendChild($header);
+    $section.appendChild($secondary);
 }
 
 function render(output: HTMLElement, path: string, content: string) {
