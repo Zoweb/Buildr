@@ -3,6 +3,8 @@ import * as fs from "fs-extra-promise";
 import {Logger} from "../getLogger";
 import DatabaseGetter from "./getter/DatabaseGetter";
 import UserGetter from "./getter/UserGetter";
+import {existsAsync, mkdirsAsync, mkdirsSync} from "fs-extra-promise";
+import {existsSync} from "fs";
 
 const logger = Logger.create("storage/DatabaseManager");
 
@@ -74,6 +76,8 @@ export default class DatabaseManager {
         let pathName = path.join(this.dataDirectory, name);
         logger.debug(`Directory is ${pathName} (root directory is ${this.dataDirectory})`);
 
+        if (!existsSync(pathName)) mkdirsSync(pathName);
+
         return new DatabaseGetter(pathName);
     }
 
@@ -84,6 +88,8 @@ export default class DatabaseManager {
 
         const pathName = path.join(this.dataDirectory, name);
         logger.debug("Directory is", pathName, "( root directory is", this.dataDirectory, ")");
+
+        if (!existsSync(pathName)) mkdirsSync(pathName);
 
         return new UserGetter(pathName);
     }

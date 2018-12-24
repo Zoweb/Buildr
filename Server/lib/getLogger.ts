@@ -1,9 +1,13 @@
-import {mkdirpSync} from "fs-extra-promise";
+import {mkdirpSync, mkdirsSync} from "fs-extra-promise";
 import * as bunyan from "bunyan";
 import * as callsiteRecord from "callsite-record";
+import {existsSync} from "fs";
 
 const loggerExport = {
     create(name) {
+        // create output directory if it doesn't exist
+        if (!existsSync("logs")) mkdirsSync("logs");
+
         return bunyan.createLogger({
             name,
 
