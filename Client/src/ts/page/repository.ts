@@ -92,7 +92,7 @@ async function runPage(client: ResourceClient) {
     console.debug("Path:", repoPath);
 
     if (repoPath.length === 0) {
-        await runFileDisplay(client, "README.md", repoName);
+        await runFileDisplay(client, "README.md", repoName, true);
     }
 
     if (repoPath.startsWith("/dir/")) {
@@ -100,7 +100,11 @@ async function runPage(client: ResourceClient) {
     }
 
     if (repoPath.startsWith("/file/")) {
-        await runFileDisplay(client, repoPath.substr("/file/".length), repoName);
+        await runFileDisplay(client, repoPath.substr("/file/".length), repoName, false);
+    }
+
+    if (repoPath.startsWith("/error/")) {
+        await runErrorDisplay(client, repoName, repoPath.substr("/error/".length));
     }
 }
 
@@ -214,7 +218,7 @@ async function runDirectoryDisplay(client: ResourceClient, repoPath: string, rep
     }
 }
 
-async function runFileDisplay(client: ResourceClient, path: string, repoName: string) {
+async function runFileDisplay(client: ResourceClient, path: string, repoName: string, isRoot: boolean) {
     const $contents = document.getElementById("contents");
     const $header = document.createElement("div");
     $header.className = "contents-section";
@@ -232,6 +236,19 @@ async function runFileDisplay(client: ResourceClient, path: string, repoName: st
 
     // find this file
     const thisFile = files.find(it => it.fullPath === path && it.type === "file");
+
+    if (typeof thisFile === "undefined") {
+        // file is not found
+
+        if (isRoot) {
+            // redirect to just the directory view
+            location.hash = `${repoName}/dir/`;
+            return;
+        }
+
+        // display a 404 error
+        location.hash = `${repoName}/404`;
+    }
 
     const fileContentsResult = await client.get("repository:file-contents", {
         repository: repoName,
@@ -263,6 +280,37 @@ async function runFileDisplay(client: ResourceClient, path: string, repoName: st
     $contents.appendChild($header);
     $contents.appendChild($fileContents);
     $contents.appendChild($footer);
+}
+
+async function runErrorDisplay(client: ResourceClient, name: string, type: string) {
+    console.debug("An error happened, displaying page.");
+
+    const $contents = document.getElementById("contents");
+
+    const $header = document.createElement("h3");
+
+    let headerText: string;
+    switch (type) {
+        case "404": headerText = "We couldn't find that."; break;
+
+        case "500":
+        default: headerText = "Something went wrong."; break;
+    }
+    $header.textContent = headerText;
+
+    const $secondary = document.createElement("p");
+    $secondary.classList.add("info");
+    $secondary.textContent = "Try going ";
+
+    const $secondaryLink = document.createElement("a") as HTMLAnchorElement;
+    $secondaryLink.textContent = "back";
+    $secondaryLink.addEventListener("click", e => {
+        e.preventDefault();
+
+        history.back();
+    });
+
+    $contents.appendChild($header);
 }
 
 function render(output: HTMLElement, path: string, content: string) {
