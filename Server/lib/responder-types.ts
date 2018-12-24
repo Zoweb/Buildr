@@ -36,6 +36,10 @@ export const RepositoryFileContents = Record({
     file: String
 });
 
+export const RepositoryGetName = Record({
+    assumedName: String
+});
+
 export const Resource = Record({
     path: String
 });
