@@ -326,6 +326,8 @@ function render(output: HTMLElement, path: string, content: string) {
 
     let result = "";
 
+    console.debug("File extension:", extension);
+
     switch (extension) {
         case "md":
             result = renderMarkdown(content); break;
@@ -346,6 +348,19 @@ function render(output: HTMLElement, path: string, content: string) {
         case "json": // JSON
         case "m": // Objective-C
         case "perl": */
+
+        case "png":
+        case "jpg":
+        case "jpeg":
+        case "tiff":
+        case "tif":
+        case "gif":
+        case "bmp":
+        case "ico":
+        case "svg":
+        case "webp":
+            result = renderImage(content, extension, path);
+            break;
 
         case "txt":
             result = renderText(content); break;
@@ -376,4 +391,34 @@ function renderCode(input: string) {
     element.textContent = input;
     hljs.highlightBlock(element);
     return element.outerHTML;
+}
+
+function renderImage(input: string, extension: string, filename: string) {
+    console.debug("Rendering text as image");
+
+    const buff = new Uint8Array();
+
+    const decoder = new Text
+
+    const base64 = btoa(input);
+    const base64Encoded = encodeURIComponent(base64);
+
+    const mimeType = {
+        png: "image/png",
+        jpg: "image/jpeg",
+        jpeg: "image/jpeg",
+        tiff: "image/tiff",
+        tff: "image/tiff",
+        gif: "image/gif",
+        bmp: "image/bmp",
+        ico: "image/x-icon",
+        svg: "image/svg+xml",
+        webp: "image/webp"
+    }[extension];
+
+    const src = `data:${mimeType};base64,${base64Encoded}`;
+
+    console.debug(src);
+
+    return `<img src=${src} alt="${filename}" />`
 }
