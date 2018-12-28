@@ -15,4 +15,9 @@
 
 .icon {
     font-family: icofont;
+    text-decoration: none;
+
+    a {
+        text-decoration: none;
+    }
 }
