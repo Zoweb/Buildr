@@ -9,6 +9,7 @@
         "html2canvas": "latest",
         "http-server": "^0.11.1",
         "md5": "latest",
+        "normalize.css": "^8.0.1",
         "runtypes": "latest",
         "sha1": "latest",
         "sha3": "latest",
@@ -22,8 +23,15 @@
         "@types/showdown": "^1.7.5",
         "base-64": "latest",
         "parcel-bundler": "^1.10.3",
+        "postcss-font-magician": "^2.2.1",
+        "postcss-import": "^12.0.1",
+        "postcss-nested": "^4.1.1",
+        "postcss-preset-env": "^6.5.0",
+        "postcss-sorting": "^4.0.1",
+        "postcss-utilities": "^0.8.0",
         "posthtml-aria-tabs": "^1.0.0",
         "posthtml-include": "^1.2.0",
+        "precss": "^4.0.0",
         "sass": "^1.15.1",
         "ts-node": "^7.0.1",
         "typescript": "^3.1.6"
@@ -32,7 +40,12 @@
         "dev": "parcel src/**/*.html",
         "prod": "parcel build src/**/*.html",
         "start": "http-server dist",
-        "postinstall": "echo \"WOKRING DIRECTORY\" is $PWD && dir src && yarn run prod",
         "sourcemap": "ts-node sourcemap.ts"
-    }
+    },
+    "browserslist": [
+        "> 0.2%",
+        "last 2 versions",
+        "Firefox ESR",
+        "not dead"
+    ]
 }
