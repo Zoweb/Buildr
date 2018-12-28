@@ -1,0 +1,52 @@
+:root {
+    --display-margin: 24vw;
+
+    --nav-height: calc(4em - .2em);
+    --nav-height-fixed: calc(3em - .27em);
+}
+
+body.-theme {
+    &.-colour {
+        &.blue {
+            --colour: #42a5f5;
+            --theme-colour-dark: #0077c2;
+            --theme-colour-light: #75b3f5;
+        }
+    }
+    &.-lightness {
+        &.light {
+            --colour-dark: var(--theme-colour-dark);
+            --colour-light: var(--theme-colour-light);
+
+            --grey-xlight: #f1f1f1;
+            --grey-light: #afb1b2;
+            --grey-mid: #7b7f85;
+            --grey-dark: #373a3c;
+            --grey-xdark: #191a1b;
+
+            --grey-dark-opac77: #373a3c77;
+
+            --solid-light: #fff;
+            --solid-dark: #000;
+
+            --background-colour: #fafafa;
+        }
+        &.dark {
+            --colour-dark: var(--theme-colour-light);
+            --colour-light: var(--theme-colour-dark);
+
+            --grey-xlight: #191a1b;
+            --grey-light: #373a3c;
+            --grey-mid: #7b7f85;
+            --grey-dark: #afb1b2;
+            --grey-xdark: #c9d3d6;
+
+            --grey-dark-opac77: #b0bcc877;
+
+            --solid-light: #000;
+            --solid-dark: #fff;
+
+            --background-colour: #111111;
+        }
+    }
+}
