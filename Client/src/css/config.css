@@ -25,9 +25,12 @@ body.-theme {
             --grey-xdark: #191a1b;
 
             --grey-dark-opac77: #373a3c77;
+            --grey-dark-opac33: #373a3c77;
 
             --solid-light: #fff;
             --solid-dark: #000;
+
+            --solid-light-02: #fff2;
 
             --background-colour: #fafafa;
         }
@@ -45,6 +48,8 @@ body.-theme {
 
             --solid-light: #000;
             --solid-dark: #fff;
+
+            --solid-light-02: #0002;
 
             --background-colour: #111111;
         }
