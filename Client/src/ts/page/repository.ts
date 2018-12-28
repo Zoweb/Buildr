@@ -13,6 +13,8 @@ import showdown from "showdown";
 import hljs from "highlight.js";
 import "highlight.js/styles/a11y-light.css";
 import selectElementText from "../tool/selectElementText";
+import "../styling";
+import "../../css/pages/repository.css";
 
 const codeHighlightExtension = () => {
     function htmlunencode(text) {
