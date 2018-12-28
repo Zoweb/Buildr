@@ -1,0 +1,43 @@
+@import "normalize.css";
+@import "./config.css";
+@import "./tools.css";
+
+@import "./element/code.css";
+@import "./element/form.css";
+
+@font-face {
+    font-family: icofont;
+    font-weight: normal;
+    font-style: normal;
+    src: url("../data/fonts/icofont.woff2") format("woff2"),
+        url("../data/fonts/icofont.woff") format("woff");
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+
+    background: var(--background-colour);
+}
+
+body {
+    font-family: Lato, sans-serif;
+    color: var(--solid-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    font-family: Roboto, sans-serif;
+}
+
+main {
+    margin-left: var(--display-margin);
+    margin-right: var(--display-margin);
+    margin-top: calc(var(--nav-height) + 1.3em);
+
+    padding: 1em;
+}
+
+a {
+    color: #42a5f5;
+}
