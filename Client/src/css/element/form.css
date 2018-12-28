@@ -1,0 +1,159 @@
+@import "../config.css";
+
+button {
+    --display-colour: var(--colour-dark);
+
+    display: block;
+
+    background: var(--solid-light);
+    color: var(--display-colour);
+    border: 2px solid var(--display-colour);
+
+    padding: .7em 1em;
+
+    font-family: Roboto, sans-serif;
+    text-align: center;
+    font-weight: bold;
+
+    margin-bottom: 1.2em;
+
+    cursor: pointer;
+
+    border-radius: 5px;
+
+    &:hover, &:focus {
+        --display-colour: var(--colour);
+    }
+
+    &:active {
+        --display-colour: var(--colour-light);
+    }
+
+    &.button-icon::before {
+        font-family: icofont;
+        font-weight: normal;
+        content: attr(data-icon);
+
+        display: inline-block;
+        margin-right: .7em;
+    }
+
+    &.filled {
+        background: var(--display-colour);
+        color: white;
+        border-color: var(--solid-light);
+        box-shadow: 1px 1px 3px var(--grey-dark-opac77);
+    }
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=tel],
+input[type=color],
+input[type=number] {
+    --display-colour: var(--grey-mid);
+
+    display: block;
+
+    background: var(--solid-light);
+    color: var(--solid-dark);
+    border: 2px solid var(--display-colour);
+
+    padding: .4em .6em;
+
+    margin-bottom: 1.2em;
+
+    &:hover, &:focus {
+        --display-colour: var(--grey-light);
+    }
+
+    &:focus {
+        background: var(--grey-xlight);
+    }
+}
+
+.input-label {
+    --display-colour: var(--grey-mid);
+
+    display: table;
+
+    padding-left: .5em;
+
+    color: var(--solid-dark);
+    background: var(--solid-light);
+
+    border: 2px solid var(--display-colour);
+
+    margin-bottom: 1.2em;
+
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+
+    cursor: text;
+
+    user-select: none;
+
+    &:hover {
+        --display-colour: var(--grey-light);
+    }
+
+    &.icon {
+        font-family: icofont;
+        font-weight: normal;
+
+        padding-left: .3em;
+
+        input {
+            margin-left: 0;
+            border-left: none;
+        }
+    }
+
+    input {
+        border: none;
+        border-left: 2px solid var(--grey-light);
+        margin: 0 0 0 .5em;
+
+        font-family: Lato, sans-serif;
+
+        display: inline-block;
+    }
+
+    &.error {
+        --display-colour: #ff4236;
+    }
+}
+
+input.error, button.error, .input-label.error,
+input:user-invalid, .input-label input:user-invalid {
+    --display-colour: #ff4236 !important;
+
+    &:hover, &:focus {
+        --display-colour: #ff695f !important;
+    }
+
+    &:active {
+        --display-colour: #ff9e9b !important;
+    }
+}
+
+form {
+    .header {
+        font-size: 1.4em;
+        display: inline-block;
+
+        &::after {
+            content: "";
+
+            width: 120%;
+            height: 2px;
+
+            margin-top: 3px;
+
+            display: block;
+            background: var(--grey-mid);
+        }
+    }
+}
