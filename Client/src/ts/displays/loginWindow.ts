@@ -1,22 +1,18 @@
 import WindowDisplay from "./WindowDisplay";
-import sha1 from "sha1";
 
 function generateInput(name, type, placeholder = "") {
-    const id = sha1(`${name} (${type})`);
-
     const input = document.createElement("input") as HTMLInputElement;
-    input.id = "input-" + id;
     input.type = type;
     input.placeholder = placeholder;
 
-    const label = document.createElement("label") as HTMLLabelElement;
-    label.htmlFor = "input-" + id;
+    const label = document.createElement("span") as HTMLLabelElement;
+    label.classList.add("input-label");
     label.textContent = name;
 
     const container = document.createElement("div");
-    container.id = "container-" + id;
-    container.appendChild(input);
+
     container.appendChild(label);
+    label.appendChild(input);
 
     return {
         container,

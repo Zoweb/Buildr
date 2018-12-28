@@ -1,26 +1,22 @@
 import WindowDisplay from "./WindowDisplay";
 import ResourceClient from "../resource/ResourceClient";
-import sha1 from "sha1";
 import md5 from "md5";
 
-export function generateInput(name, type, placeholder = "", value = "", disable = false) {
-    const id = sha1(`${name} (${type})`);
-
+function generateInput(name, type, placeholder = "") {
     const input = document.createElement("input") as HTMLInputElement;
-    input.id = "input-" + id;
     input.type = type;
     input.placeholder = placeholder;
-    if (value.length > 0) input.value = value;
-    if (disable) input.disabled = true;
 
-    const label = document.createElement("label") as HTMLLabelElement;
-    label.htmlFor = "input-" + id;
+    const label = document.createElement("span") as HTMLLabelElement;
+    label.classList.add("input-label");
     label.textContent = name;
 
     const container = document.createElement("div");
-    container.id = "container-" + id;
-    container.appendChild(input);
+
     container.appendChild(label);
+    label.appendChild(input);
+
+    label.addEventListener("mousedown", () => input.focus());
 
     return {
         container,
