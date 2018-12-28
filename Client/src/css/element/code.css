@@ -1,0 +1,10 @@
+pre, code {
+    font-family: "Ubuntu Mono", monospace;
+}
+
+:not(pre) > code {
+    padding: .1em .15em;
+    border: 1px solid var(--grey-dark);
+    border-radius: 2px;
+    background: var(--solid-light);
+}
