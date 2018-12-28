@@ -4,6 +4,7 @@
 
 @import "./element/code.css";
 @import "./element/form.css";
+@import "./element/navbar.css";
 
 @font-face {
     font-family: icofont;
