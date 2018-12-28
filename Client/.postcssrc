@@ -1,0 +1,13 @@
+{
+    "plugins": {
+        "postcss-import": {},
+        "precss":  {},
+        "autoprefixer": {},
+        "postcss-utilities": {},
+        "postcss-sorting": {},
+        "postcss-font-magician": {},
+        "postcss-preset-env": {
+            "stage": 0
+        }
+    }
+}
