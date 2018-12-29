@@ -20,9 +20,11 @@ nav {
 
     margin-bottom: var(--nav-height);
 
+    font-family: var(--font-header);
+
     .title {
         font-size: 2em;
-        font-weight: 200;
+        font-weight: 300;
 
         padding: .375em .7em;
 
@@ -44,8 +46,10 @@ nav {
         float: right;
         display: flex;
 
+        font-family: var(--font-body);
+
         section {
-            padding: .35em;
+            padding: .25em;
             cursor: pointer;
             display: inline-block;
 
@@ -88,7 +92,7 @@ nav {
                 font-size: .7em;
                 color: var(--solid-dark);
 
-                background: var(--solid-light);
+                background: var(--grey-xlight);
 
                 border-bottom-left-radius: .2em;
 
