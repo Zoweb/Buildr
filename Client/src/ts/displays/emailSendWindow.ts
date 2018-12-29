@@ -2,7 +2,7 @@ import WindowDisplay from "./WindowDisplay";
 import ResourceClient from "../resource/ResourceClient";
 import md5 from "md5";
 
-function generateInput(name, type, placeholder = "") {
+export function generateInput(name, type, placeholder = "") {
     const input = document.createElement("input") as HTMLInputElement;
     input.type = type;
     input.placeholder = placeholder;
