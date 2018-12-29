@@ -1,5 +1,6 @@
 import {EventEmitter} from "events";
 import moment from "moment";
+import "../../../css/element/progress-bar.css";
 
 export default class ProgressBar extends EventEmitter {
     private static generate() {
