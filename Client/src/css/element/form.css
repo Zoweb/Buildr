@@ -1,5 +1,3 @@
-@import "../config.css";
-
 button {
     --display-colour: var(--colour-dark);
 
@@ -11,11 +9,11 @@ button {
 
     padding: .7em 1em;
 
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-header);
     text-align: center;
     font-weight: bold;
 
-    margin-bottom: 1.2em;
+    margin: .6em 0;
 
     cursor: pointer;
 
@@ -44,6 +42,10 @@ button {
         border-color: var(--solid-light);
         box-shadow: 1px 1px 3px var(--grey-dark-opac77);
     }
+
+    &.full-width {
+        width: 100%;
+    }
 }
 
 input[type=text],
@@ -63,7 +65,7 @@ input[type=number] {
 
     padding: .4em .6em;
 
-    margin-bottom: 1.2em;
+    margin: .6em 0;
 
     &:hover, &:focus {
         --display-colour: var(--grey-light);
@@ -72,28 +74,38 @@ input[type=number] {
     &:focus {
         background: var(--grey-xlight);
     }
+
+    &.full-width {
+        width: calc(100% - 1.2em - 4px);
+    }
 }
 
 .input-label {
     --display-colour: var(--grey-mid);
 
-    display: table;
+    display: flex;
 
     padding-left: .5em;
+    line-height: 2;
 
     color: var(--solid-dark);
     background: var(--solid-light);
 
     border: 2px solid var(--display-colour);
 
-    margin-bottom: 1.2em;
+    margin: .6em 0;
 
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-header);
     font-weight: bold;
 
     cursor: text;
 
     user-select: none;
+
+    &::before {
+        content: attr(data-label);
+        line-height: 2em;
+    }
 
     &:hover {
         --display-colour: var(--grey-light);
@@ -116,9 +128,11 @@ input[type=number] {
         border-left: 2px solid var(--grey-light);
         margin: 0 0 0 .5em;
 
-        font-family: Lato, sans-serif;
+        font-family: var(--font-body);
 
         display: inline-block;
+
+        width: 100%;
     }
 
     &.error {
@@ -126,8 +140,7 @@ input[type=number] {
     }
 }
 
-input.error, button.error, .input-label.error,
-input:user-invalid, .input-label input:user-invalid {
+input.error, button.error, .input-label.error {
     --display-colour: #ff4236 !important;
 
     &:hover, &:focus {
@@ -140,6 +153,27 @@ input:user-invalid, .input-label input:user-invalid {
 }
 
 form {
+    position: relative;
+
+    &:not(.no-border) {
+        margin: 1em;
+        padding: .7em;
+        border: 1px solid var(--colour-dark);
+        border-radius: 5px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0;
+    }
+
+    :first-child {
+        margin-top: 0;
+    }
+
+    :last-child {
+        margin-bottom: 0;
+    }
+
     .header {
         font-size: 1.4em;
         display: inline-block;
@@ -154,6 +188,24 @@ form {
 
             display: block;
             background: var(--grey-mid);
+        }
+    }
+
+    &.has-submit-button {
+        :nth-last-child(2) {
+            max-width: calc(80% - .5em);
+            margin-bottom: 0;
+        }
+
+        button.submit:last-child {
+            position: absolute;
+            right: -1px;
+            bottom: -1px;
+
+            width: 20%;
+
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 0;
         }
     }
 }
