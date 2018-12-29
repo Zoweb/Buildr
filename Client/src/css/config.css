@@ -1,8 +1,20 @@
 :root {
     --display-margin: 24vw;
 
-    --nav-height: calc(4em - .2em);
-    --nav-height-fixed: calc(3em - .27em);
+    --nav-height: 4.2em;
+    --nav-height-fixed: calc(3em);
+
+    --font-header: Roboto, sans-serif;
+    --font-mono: "Ubuntu Mono", monospace;
+    --font-body: -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Helvetica,
+            Arial,
+            sans-serif,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol";
 }
 
 body.-theme {
@@ -22,10 +34,10 @@ body.-theme {
             --grey-light: #afb1b2;
             --grey-mid: #7b7f85;
             --grey-dark: #373a3c;
-            --grey-xdark: #191a1b;
+            --grey-xdark: #24292e;
 
             --grey-dark-opac77: #373a3c77;
-            --grey-dark-opac33: #373a3c77;
+            --grey-dark-opac33: #373a3c33;
 
             --solid-light: #fff;
             --solid-dark: #000;
