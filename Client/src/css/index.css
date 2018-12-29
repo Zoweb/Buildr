@@ -1,19 +1,12 @@
 @import "normalize.css";
 @import "./config.css";
 @import "./tools.css";
+@import "./fonts.css";
 
 @import "./element/code.css";
 @import "./element/form.css";
 @import "./element/navbar.css";
 @import "./element/window.css";
-
-@font-face {
-    font-family: icofont;
-    font-weight: normal;
-    font-style: normal;
-    src: url("../data/fonts/icofont.woff2") format("woff2"),
-        url("../data/fonts/icofont.woff") format("woff");
-}
 
 body, html {
     margin: 0;
