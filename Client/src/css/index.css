@@ -5,6 +5,7 @@
 @import "./element/code.css";
 @import "./element/form.css";
 @import "./element/navbar.css";
+@import "./element/window.css";
 
 @font-face {
     font-family: icofont;

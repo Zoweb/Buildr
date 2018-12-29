@@ -1,0 +1,65 @@
+.window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+
+    width: 20em;
+
+    z-index: 100000;
+
+    .outer {
+        background: var(--solid-light);
+
+        border: 1px solid var(--colour-dark);
+        border-radius: 5px;
+
+        width: 100%;
+
+        .content {
+            padding: .6em .6em .8em;
+
+            .message {
+                margin: .2em 0;
+            }
+
+            > :last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        .title {
+            display: block;
+
+            padding: .4em .2em .4em 1em;
+
+            cursor: move;
+
+            font-family: Roboto, sans-serif;
+            font-size: .9em;
+            font-weight: bold;
+
+            color: var(--solid-light);
+            background: var(--colour-dark);
+        }
+    }
+}
+
+.window-background-hider, .window-background-hider-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: var(--grey-dark-opac33);
+}
+
+.window-background-hider {
+    z-index: 99999;
+}
+
+.window-background-hider-canvas {
+    z-index: 99998;
+}
