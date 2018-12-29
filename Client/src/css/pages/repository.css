@@ -9,7 +9,7 @@
 
     display: block;
 
-    font-family: Roboto, sans-serif;
+    font-family: var(--font-header);
     font-size: 1.2em;
     font-weight: bold;
 
@@ -90,7 +90,7 @@
         .file-size {
             float: right;
 
-            font-family: "Ubuntu Mono", sans-serif;
+            font-family: var(--font-mono);
         }
 
         .commit {
@@ -114,7 +114,7 @@
             }
 
             .commit-id {
-                font-family: "Ubuntu Mono", sans-serif;
+                font-family: var(--font-mono);
             }
 
             &:hover {
