@@ -1,0 +1,19 @@
+language: node_js
+dist: trusty
+addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+before_deploy: yarn run build
+deploy:
+    - provider: pages
+      skip_cleanup: true
+      github-token: "$GH_TOKEN"
+      target-branch: master
+      repo: Zoweb/buildr-app
+      local-dir: packages/Client/dist
+    - provider: heroku
+      api_key: "$HEROKU_TOKEN"
