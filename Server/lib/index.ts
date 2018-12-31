@@ -5,10 +5,8 @@ import NodeSocket from "./socket/NodeSocket";
 import InvalidRequestException from "./errors/InvalidRequestException";
 import {Stringifyable} from "./Stringifyable";
 import {readFileAsync} from "fs-extra-promise";
-import * as nodemailer from "nodemailer";
 import getResource from "./storage/getResource";
 import {gitDb, gitServer, languagesDb, optionsDb, setDatabases, usersDb} from "./static";
-import templater from "./tool/TemplateEngine";
 import * as connect from "connect";
 import * as http from "http";
 import * as url from "url";
@@ -16,8 +14,8 @@ import AuthenticationException from "./errors/AuthenticationException";
 import GitServer from "./Git/GitServer";
 import * as path from "path";
 import AuthenticatedSocket from "./socket/AuthenticatedSocket";
-import LocalState from "./tool/LocalState";
-import User from "./security/User";
+import * as mime from "mime";
+import * as mmmagic from "mmmagic";
 import {
     RepositoryCreate, RepositoryFileContents,
     RepositoryGetFiles, RepositoryGetName, RepositoryList,
@@ -195,7 +193,25 @@ const run = async function() {
         try {
             const fileLastModified = await gitServer.getLastModifiedHash(repositoryName, repositoryPath);
             const fileContents = await gitServer.readFile(repositoryName, fileLastModified, repositoryPath);
-            res.setHeader("Content-Type", "text/plain");
+
+            // get mime type
+            const extension = path.split(".").pop();
+            let mimeType: string;
+            if (extension) {
+                mimeType = mime.getType(extension);
+            } else {
+                const magic = new mmmagic.Magic(mmmagic.MAGIC_MIME_TYPE | mmmagic.MAGIC_MIME_ENCODING);
+                mimeType = await new Promise((yay, nay) =>
+                    magic.detect(Buffer.from(fileContents), (err, result: string) => {
+                    if (err) nay(err);
+                    else yay(result);
+                })) as string;
+            }
+
+            if (mimeType === "text/markdown")
+                mimeType = "text/plain";
+
+            res.setHeader("Content-Type", mimeType);
             res.end(fileContents);
         } catch (ex) {
             res.writeHead(404, "File Not Found");
