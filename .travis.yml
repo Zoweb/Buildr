@@ -18,4 +18,6 @@ deploy:
       repo: Zoweb/buildr-app
       local-dir: packages/Client/dist
     - provider: heroku
+      skip_cleanup: true
       api_key: "$HEROKU_TOKEN"
+      master: buildr-client
