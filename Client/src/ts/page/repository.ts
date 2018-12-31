@@ -13,6 +13,7 @@ import showdown from "showdown";
 import hljs from "highlight.js";
 import "highlight.js/styles/a11y-light.css";
 import selectElementText from "../tool/selectElementText";
+import * as Path from "path";
 
 const codeHighlightExtension = () => {
     function htmlunencode(text) {
@@ -268,7 +269,7 @@ async function runFileDisplay(client: ResourceClient, path: string, repoName: st
     $fileContents.classList.add("contents-section");
     $fileContents.classList.add("no-padding");
 
-    render($fileContents, path, fileContents);
+    await render(client, $fileContents, path, fileContents, repoName);
 
     const $footer = document.createElement("div");
     $footer.classList.add("contents-section");
@@ -321,7 +322,7 @@ async function runErrorDisplay(client: ResourceClient, name: string, type: strin
     $section.appendChild($secondary);
 }
 
-function render(output: HTMLElement, path: string, content: string) {
+async function render(client: ResourceClient, output: HTMLElement, path: string, content: string, repoName: string) {
     const extension = path.substr(path.lastIndexOf(".") + 1);
 
     let result = "";
@@ -330,7 +331,7 @@ function render(output: HTMLElement, path: string, content: string) {
 
     switch (extension) {
         case "md":
-            result = renderMarkdown(content); break;
+            result = await renderMarkdown(client, content, path, repoName); break;
 
         /*case "conf": // Apache and nginx
         case "sh": // Bash
@@ -377,12 +378,58 @@ function renderText(input: string) {
     return `<pre>` + input.replace(/</g, "&lt;") + "</pre>";
 }
 
-function renderMarkdown(input: string) {
+async function renderMarkdown(client: ResourceClient, input: string, filename: string, repoName: string) {
     console.debug("Rendering text as markdown");
     const converter = new showdown.Converter({
         extensions: [codeHighlightExtension]
     });
-    return "<div style='padding:.6em .8em'>" + converter.makeHtml(input) + "</div>";
+
+    const markdownElement = document.createElement("div");
+    markdownElement.innerHTML = converter.makeHtml(input);
+    markdownElement.style.padding = ".6em .8em";
+
+    // make images have correct source
+    const imageSourcePromises = [];
+
+    markdownElement.querySelectorAll("img[src]").forEach((image: HTMLImageElement) => {
+        imageSourcePromises.push((async () => {
+            const sourceFile = Path.normalize(
+                Path.join(
+                    filename.substr(0, filename.lastIndexOf("/")),
+                    image.getAttribute("src")
+                )
+            );
+
+            const data = await client.get("repository:file-contents", {
+                repository: repoName,
+                hash: "",
+                file: sourceFile
+            });
+
+            image.outerHTML = renderImage(data.contents, sourceFile.substr(sourceFile.lastIndexOf(".") + 1), sourceFile);
+
+            /*console.debug("** IMAGE SOURCE FILE:", sourceFile, "from", filename);
+
+            let imageSource = "";
+
+            imageSource += await client.getResource("config:host.backend.protocol") + "://";
+            imageSource += await client.getResource("config:host.backend.name") + ":";
+            imageSource += await client.getResource("config:host.backend.port.public");
+            imageSource += "/rawrepo/";
+            imageSource += repoName + "/";
+            imageSource += sourceFile;
+
+            console.debug("Updating image source to", imageSource);
+
+            image.src = imageSource;*/
+
+
+        })());
+    });
+
+    await Promise.all(imageSourcePromises);
+
+    return markdownElement.outerHTML;
 }
 
 function renderCode(input: string) {
@@ -395,10 +442,7 @@ function renderCode(input: string) {
 
 function renderImage(input: string, extension: string, filename: string) {
     console.debug("Rendering text as image");
-
-    const buff = new Uint8Array();
-
-    const decoder = new Text
+    console.debug("Extension:", extension, ", filename:", filename);
 
     const base64 = btoa(input);
     const base64Encoded = encodeURIComponent(base64);
@@ -418,7 +462,5 @@ function renderImage(input: string, extension: string, filename: string) {
 
     const src = `data:${mimeType};base64,${base64Encoded}`;
 
-    console.debug(src);
-
-    return `<img src=${src} alt="${filename}" />`
+    return `<img src=${src} alt="${filename}" style='max-width:100%' />`
 }
