@@ -52,7 +52,9 @@ const codeHighlightExtension = () => {
 
     const repoName = await client.get("repository:get-name", {
         assumedName: location.hash.substr(1).split("/")[0]
-    });
+    }).catch(() => location.replace("/404.html"));
+
+    console.debug("Found real repository name:", repoName);
 
     console.debug("Setting button URLs");
     (document.getElementById("issues-button") as HTMLAnchorElement).href = `#${repoName}/issues`;
@@ -77,22 +79,25 @@ const codeHighlightExtension = () => {
     $repoName.textContent = repoName;
     $repoName.href = `#${repoName}`;
 
-    await runPage(client);
+    await runPage(client, repoName);
 
-    addEventListener("hashchange", () => runPage(client));
+    addEventListener("hashchange", () => runPage(client, repoName));
 
 })().catch(err => {
     console.error(err);
 });
 
-async function runPage(client: ResourceClient) {
-    let repoName = location.hash.substr(1).split("/")[0];
-    let repoPath = location.hash.substr(repoName.length + 1);
+async function runPage(client: ResourceClient, repoName: string) {
+    let repoPath: string;
+    if (location.hash.indexOf("/") === -1) repoPath = "";
+    else repoPath = location.hash.substr(location.hash.indexOf("/") + 1);
 
-    repoName = decodeURIComponent(repoName);
     repoPath = decodeURIComponent(repoPath);
 
-    console.debug("Path:", repoPath);
+    console.log("Info:", {
+        repoName,
+        repoPath
+    });
 
     if (repoPath.length === 0) {
         await runFileDisplay(client, "README.md", repoName, true);
@@ -120,7 +125,7 @@ async function getRepoFiles(client: ResourceClient, repoPath: string, repoName: 
     const files: IRepositoryGetFiles = await client.getTyped(RepositoryGetFiles, "repository:get-files", {
         repoName,
         repoPath
-    }).catch(err => location.assign("/404.html"));
+    }).catch(() => location.replace("/404.html"));
 
     files.files.reverse();
 
