@@ -38,8 +38,8 @@
         "typescript": "^3.1.6"
     },
     "scripts": {
-        "dev": "parcel src/**/*.html",
-        "build": "parcel build src/**/*.html",
+        "dev": "./node_modules/.bin/parcel src/**/*.html",
+        "build": "./node_modules/.bin/parcel build src/**/*.html",
         "start": "http-server dist",
         "sourcemap": "ts-node sourcemap.ts"
     },
