@@ -1,6 +1,6 @@
 ---
-name: Bug Report
-about: Did something not work as expected?
+name: Question
+about: Have any questions regarding how Buildr works?
 ---
 
 <!--
@@ -12,29 +12,6 @@ Search open/closed issues before submitting since someone might have asked the s
 # Bug Report
 
 <!-- Provide a general summary of the issue in the title above -->
-
-### Configuration (`configuration.json` file)
-
-<!-- If you're describing a bug, paste your configuration.json file below. Remember to censor sensitive information. -->
-
-```json
-{
-    "comment": "Paste your config inbetween the three ticks"
-}
-```
-
-### Expected Behaviour
-
-<!-- Tell us what should happen -->
-
-### Current Behaviour
-
-<!-- Tell us what happens instead of the expected behaviour -->
-<!-- If you're seeing an error, please include the full error message and stack trace -->
-
-### Possible Solution
-
-<!-- Not obligatory, but suggest a fix/reason for the bug -->
 
 ### Context
 
