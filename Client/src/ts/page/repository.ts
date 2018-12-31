@@ -90,7 +90,7 @@ const codeHighlightExtension = () => {
 async function runPage(client: ResourceClient, repoName: string) {
     let repoPath: string;
     if (location.hash.indexOf("/") === -1) repoPath = "";
-    else repoPath = location.hash.substr(location.hash.indexOf("/") + 1);
+    else repoPath = location.hash.substr(location.hash.indexOf("/"));
 
     repoPath = decodeURIComponent(repoPath);
 
