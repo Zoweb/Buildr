@@ -1,23 +1,31 @@
 ---
-name: Bug Fix
-about: Did you fix something that did not work as expected?
+name: New Feature
+about: Do you want to add something to Buildr?
 ---
 
 <!-- Thanks for creating a pull request! Before you submit, please read the following -->
 
 <!-- Search open/closed  issues before submitting since someone might have pushed the same thing before -->
 
-# Bug Fix
+# New Feature
 
-<!-- Provide the details of the pull request here and include existing issues this resolves -->
+<!-- Provide a general summary of the feature here -->
+<!-- Does this address an existing feature request? -->
 
-### Tell us what goes wrong
+<!-- Tell us how the feature should work -->
 
-<!-- Tell us what should happen -->
+### Context
+
+<!-- How has this issue affected you? What are you trying to accomplish? -->
+<!-- Providing context helps us come up with a solution that is most useful in the real world. -->
 
 ### Your Solution
 
 <!-- Describe how you fixed the bug -->
+
+## Examples
+
+<!-- Examples help us understand the feature better -->
 
 ## Test Instructions
 
