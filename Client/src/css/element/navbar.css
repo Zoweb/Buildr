@@ -1,0 +1,126 @@
+@import "../config.css";
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: var(--nav-height);
+
+    padding-left: var(--display-margin);
+    padding-right: var(--display-margin);
+
+    background: var(--colour-dark);
+    color: var(--solid-light);
+
+    // bring to front
+    z-index: 10000;
+
+    margin-bottom: var(--nav-height);
+
+    font-family: var(--font-header);
+
+    .title {
+        font-size: 2em;
+        font-weight: 300;
+
+        padding: .375em .7em;
+
+        display: inline-block;
+
+        cursor: pointer;
+
+        &:hover {
+            background: var(--solid-light-02);
+        }
+
+        a {
+            color: var(--solid-light);
+            text-decoration: none;
+        }
+    }
+
+    .right-section {
+        float: right;
+        display: flex;
+
+        font-family: var(--font-body);
+
+        section {
+            padding: .25em;
+            cursor: pointer;
+            display: inline-block;
+
+            font-size: 2em;
+
+            span {
+                a {
+                    color: var(--solid-light);
+                }
+            }
+
+            &:hover {
+                background: var(--grey-dark-opac33);
+
+                ul {
+                    pointer-events: auto;
+                    height: auto;
+
+                    opacity: 1;
+
+                    padding: 0 0 .3em 0;
+                }
+            }
+
+            ul {
+                position: absolute;
+                top: var(--nav-height-fixed);
+
+                pointer-events: none;
+                cursor: default;
+
+                opacity: 0;
+
+                height: 0;
+
+                padding: 0;
+                margin: 0 0 0 -1em;
+
+                text-align: right;
+                font-size: .7em;
+                color: var(--solid-dark);
+
+                background: var(--grey-xlight);
+
+                border-bottom-left-radius: .2em;
+
+                transition: 100ms ease-in-out;
+
+                overflow: hidden;
+
+                li {
+                    cursor: pointer;
+
+                    padding: .3em .4em;
+                    margin-top: .2em;
+
+                    display: block;
+                    color: var(--solid-dark);
+
+                    font-size: .7em;
+
+                    &:hover {
+                        background: var(--grey-dark-opac77);
+                    }
+
+                    a {
+                        color: var(--solid-dark);
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}

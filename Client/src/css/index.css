@@ -1,0 +1,73 @@
+@import "normalize.css";
+@import "./config.css";
+@import "./tools.css";
+@import "./fonts.css";
+
+@import "./element/code.css";
+@import "./element/form.css";
+@import "./element/navbar.css";
+@import "./element/window.css";
+@import "./element/socket-logger.css";
+
+body, html {
+    margin: 0;
+    padding: 0;
+
+    background: var(--background-colour);
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--grey-xdark);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    font-family: var(--font-header);
+}
+
+main {
+    margin-left: var(--display-margin);
+    margin-right: var(--display-margin);
+    margin-top: calc(var(--nav-height) + 1.3em);
+
+    padding: 1em;
+}
+
+a {
+    color: #42a5f5;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:active, &:focus {
+        color: #3687c9;
+    }
+}
+
+blockquote {
+    border-left: .25em solid var(--grey-light);
+    padding: .2em 1em;
+    color: var(--grey-mid);
+
+    > :first-child {
+        margin-top: 0;
+    }
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+li {
+    line-height: 1.3;
+}
+
+::selection {
+    background: var(--colour-dark);
+    color: var(--solid-light);
+}
