@@ -1,0 +1,69 @@
+:root {
+    --display-margin: 24vw;
+
+    --nav-height: 4.2em;
+    --nav-height-fixed: calc(3em);
+
+    --font-header: Roboto, sans-serif;
+    --font-mono: "Ubuntu Mono", monospace;
+    --font-body: -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Helvetica,
+            Arial,
+            sans-serif,
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol";
+}
+
+body.-theme {
+    &.-colour {
+        &.blue {
+            --colour: #42a5f5;
+            --theme-colour-dark: #0077c2;
+            --theme-colour-light: #75b3f5;
+        }
+    }
+    &.-lightness {
+        &.light {
+            --colour-dark: var(--theme-colour-dark);
+            --colour-light: var(--theme-colour-light);
+
+            --grey-xlight: #f1f1f1;
+            --grey-light: #afb1b2;
+            --grey-mid: #7b7f85;
+            --grey-dark: #373a3c;
+            --grey-xdark: #24292e;
+
+            --grey-dark-opac77: #373a3c77;
+            --grey-dark-opac33: #373a3c33;
+
+            --solid-light: #fff;
+            --solid-dark: #000;
+
+            --solid-light-02: #fff2;
+
+            --background-colour: #fafafa;
+        }
+        &.dark {
+            --colour-dark: var(--theme-colour-light);
+            --colour-light: var(--theme-colour-dark);
+
+            --grey-xlight: #191a1b;
+            --grey-light: #373a3c;
+            --grey-mid: #7b7f85;
+            --grey-dark: #afb1b2;
+            --grey-xdark: #c9d3d6;
+
+            --grey-dark-opac77: #b0bcc877;
+
+            --solid-light: #000;
+            --solid-dark: #fff;
+
+            --solid-light-02: #0002;
+
+            --background-colour: #111111;
+        }
+    }
+}

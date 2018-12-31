@@ -1,0 +1,36 @@
+#socket-logger {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20vh;
+
+    overflow-y: scroll;
+
+    background: var(--grey-dark);
+
+    .log-part {
+        padding: .3em .5em;
+        font-family: var(--font-mono);
+
+        &:nth-child(odd) {
+            background: var(--colour-dark);
+        }
+
+        .log-type, .log-name, .log-content {
+            display: inline-block;
+        }
+
+        .log-type {
+            width: 4em;
+        }
+
+        .log-name {
+            min-width: 12em;
+        }
+
+        .log-content {
+            margin-left: 1em;
+        }
+    }
+}

@@ -15,7 +15,7 @@ const logger = Logger.create("page/create-repo");
     const window = new WindowDisplay("Create Repository", true);
     window.addMessage("Choose a unique name");
 
-    const nameField = generateInput("repo-name", "text", "my-awesome-project");
+    const nameField = generateInput("Name", "text", "my-awesome-project");
     window.content.appendChild(nameField.container);
 
     const createButton = document.createElement("button");

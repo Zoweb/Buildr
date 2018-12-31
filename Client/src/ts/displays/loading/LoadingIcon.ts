@@ -1,4 +1,4 @@
-import "../../../scss/elements/load-icon.scss"
+import "../../../css/element/load-icon.css";
 
 export default class LoadingIcon {
     private static generate() {

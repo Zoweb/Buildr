@@ -1,0 +1,23 @@
+.info {
+    color: var(--colour-light);
+    font-style: italic;
+}
+
+.float {
+    .right {
+        float: right;
+    }
+
+    .left {
+        float: left;
+    }
+}
+
+.icon {
+    font-family: icofont;
+    text-decoration: none;
+
+    a:hover {
+        text-decoration: none;
+    }
+}

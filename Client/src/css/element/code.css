@@ -1,0 +1,9 @@
+pre, code {
+    font-family: var(--font-mono);
+}
+
+:not(pre) > code {
+    padding: .1em .15em;
+    border-radius: 2px;
+    background: var(--grey-xlight);
+}
