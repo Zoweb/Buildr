@@ -7,6 +7,7 @@
 @import "./element/form.css";
 @import "./element/navbar.css";
 @import "./element/window.css";
+@import "./element/socket-logger.css";
 
 body, html {
     margin: 0;
