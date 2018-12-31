@@ -323,13 +323,14 @@ export default class GitServer extends EventEmitter {
         const fullDirectory = path.join(this.dataDirectory, repoName);
         const progDirectory = path.join(this.setupDirectory, "git-prog.cmd");
 
-        logger.debug("Reading file from", fileHash, "in", repoName);
+        logger.debug("Reading file from", fileHash || "the latest version", "in", repoName);
 
         fileHash = fileHash.replace(/"/, "\\\"");
         fileName = fileName.replace(/"/, "\\\"");
 
         const child = exec(`${progDirectory} show "${fileHash}:${fileName}"`, {
-            cwd: fullDirectory
+            cwd: fullDirectory,
+            encoding: "binary"
         });
 
         let data = "";
@@ -337,6 +338,9 @@ export default class GitServer extends EventEmitter {
         child.stdout.on("data", dat => data += dat);
 
         await new Promise(yay => child.stdout.on("end", yay));
+        console.log("DATA LENGTH:", data.length);
+        console.log(data.substr(0, 500));
+        logger.debug("Process has exited.");
 
         return data;
     }
