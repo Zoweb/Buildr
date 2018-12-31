@@ -1,5 +1,9 @@
 {
     "name": "buildit",
     "version": "0.1.0",
-    "license": "MIT"
+    "license": "MIT",
+    "scripts": {},
+    "devDependencies": {
+        "lerna": "^3.8.0"
+    }
 }
