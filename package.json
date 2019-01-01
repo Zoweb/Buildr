@@ -10,7 +10,7 @@
                     "test":  "lerna run test --stream",
                     "format":  "prettier --write ./packages/**/*.ts",
                     "lint":  "prettier --list-different ./packages/**/*.ts",
-                    "postinstall":  "yarn build"
+                    "start": "lerna run start"
                 },
     "devDependencies":  {
                             "lerna":  "^3.8.0",
