@@ -1,6 +1,6 @@
 {
     "name":  "@buildr/client",
-    "version":  "0.1.8",
+    "version":  "0.1.9",
     "private":  true,
     "dependencies":  {
                          "@browser-bunyan/console-formatted-stream":  "latest",
@@ -42,7 +42,6 @@
     "scripts":  {
                     "dev":  "parcel src/*.html",
                     "build":  "parcel build src/*.html",
-                    "start":  "http-server dist",
                     "sourcemap":  "ts-node sourcemap.ts"
                 },
     "browserslist":  [
