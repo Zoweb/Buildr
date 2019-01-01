@@ -1,5 +1,19 @@
 {
-    "name": "buildit",
-    "version": "0.1.0",
-    "license": "MIT"
+    "name": "buildr",
+    "version": "0.1.3",
+    "private": true,
+    "license": "MIT",
+    "scripts": {
+        "install": "lerna bootstrap",
+        "build": "lerna run build --stream",
+        "dev": "lerna run dev --stream",
+        "test": "lerna run test --stream",
+        "format": "prettier --write ./packages/**/*.ts",
+        "lint": "prettier --list-different ./packages/**/*.ts",
+        "postinstall": "yarn build"
+    },
+    "devDependencies": {
+        "lerna": "^3.8.0",
+        "prettier": "1.15.3"
+    }
 }

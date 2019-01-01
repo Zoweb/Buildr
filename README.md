@@ -1,6 +1,7 @@
 # Buildr
 > Git repository hosting and CI tool
-   
+
+[![Build Status](https://travis-ci.org/Zoweb/Buildr.svg?branch=master)](https://travis-ci.org/Zoweb/Buildr)
 
 ![Repository file viewer](screenshot.png)
 

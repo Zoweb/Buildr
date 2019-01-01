@@ -1,5 +1,7 @@
 {
-    "name": "@buildit/server",
+    "name": "@buildr/server",
+    "version": "0.1.4",
+    "private": true,
     "main": "lib/index.ts",
     "dependencies": {
         "atob": "latest",
@@ -37,7 +39,6 @@
     },
     "scripts": {
         "dev": "nodemon | bunyan -o short",
-        "start": "ts-node | bunyan -o short",
-        "build": "tsc"
+        "start": "ts-node | bunyan -o short"
     }
 }

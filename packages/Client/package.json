@@ -1,5 +1,7 @@
 {
-    "name": "@buildit/client",
+    "name": "@buildr/client",
+    "version": "0.1.4",
+    "private": true,
     "dependencies": {
         "@browser-bunyan/console-formatted-stream": "latest",
         "browser-bunyan": "latest",
@@ -39,7 +41,7 @@
     },
     "scripts": {
         "dev": "parcel src/**/*.html",
-        "prod": "parcel build src/**/*.html",
+        "build": "parcel build src/**/*.html",
         "start": "http-server dist",
         "sourcemap": "ts-node sourcemap.ts"
     },
