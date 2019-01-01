@@ -1,6 +1,6 @@
 {
     "name":  "@buildr/server",
-    "version":  "0.1.9",
+    "version":  "0.1.10",
     "private":  true,
     "main":  "lib/index.ts",
     "dependencies":  {
