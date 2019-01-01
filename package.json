@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
+        "install": "lerna bootstrap",
         "build": "lerna run build --stream",
         "dev": "lerna run dev --stream",
         "test": "lerna run test --stream",
