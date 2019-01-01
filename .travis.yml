@@ -15,7 +15,7 @@ deploy:
       skip_cleanup: true
       github-token: "$GH_TOKEN"
       target-branch: master
-      repo: Zoweb/buildr-app
+      repo: BuildrApp/BuildrApp.github.io
       local-dir: packages/Client/dist
     - provider: heroku
       skip_cleanup: true
