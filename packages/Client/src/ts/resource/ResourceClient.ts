@@ -12,8 +12,8 @@ export default class ResourceClient {
     connection: SocketClient;
     language: string = "en";
 
-    connect(host: string, port: number, path?: string) {
-        const url = `ws://${host}:${port}/${path ? path : ""}`;
+    connect(host: string, port: number, path: string = "", secure: boolean = false) {
+        const url = `ws${secure ? "s" : ""}://${host}:${port}/${path}`;
         console.debug(`Connecting to ${url}`);
         this.connection = new SocketClient(url);
 

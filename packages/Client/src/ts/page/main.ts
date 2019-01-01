@@ -26,7 +26,9 @@ export default async function(options: Options = {
 
     console.debug("Connecting to server");
     const client = new ResourceClient();
-    client.connect("192.168.1.29", 6223);
+
+    // TODO use values set in configuration.json
+    client.connect("buildr-backend.herokuapp.com", 80, "", true);
 
     window["_enableDebugMode"] = () => {
         document.body.appendChild(socketLogger);
