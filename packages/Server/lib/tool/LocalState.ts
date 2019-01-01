@@ -11,7 +11,7 @@ export interface StateData<TValue> {
 }
 
 export default class LocalState<TValue> {
-    private static readonly ID_SIZE: number = 1;
+    private static readonly ID_SIZE: number = 64;
 
     private static generateId() {
         return crypto.randomBytes(LocalState.ID_SIZE).toString("hex");

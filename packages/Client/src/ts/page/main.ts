@@ -28,6 +28,10 @@ export default async function(options: Options = {
     const client = new ResourceClient();
     client.connect("192.168.1.29", 6223);
 
+    window["_enableDebugMode"] = () => {
+        document.body.appendChild(socketLogger);
+    };
+
     client.connection.onAny((event, data) => {
         if (event === "handshake") return;
 
