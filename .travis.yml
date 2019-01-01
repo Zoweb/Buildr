@@ -18,6 +18,6 @@ deploy:
       repo: BuildrApp/BuildrApp.github.io
       local-dir: packages/Client/dist
     - provider: heroku
-      skip_cleanup: true
       api_key: "$HEROKU_TOKEN"
       app: buildr-backend
+      local-dir: packages/Server
