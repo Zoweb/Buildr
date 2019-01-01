@@ -1,44 +1,44 @@
 {
-    "name": "@buildr/server",
-    "version": "0.1.4",
-    "private": true,
-    "main": "lib/index.ts",
-    "dependencies": {
-        "atob": "latest",
-        "btoa": "latest",
-        "bunyan": "latest",
-        "callsite-record": "latest",
-        "connect": "latest",
-        "crypto-js": "latest",
-        "fs-extra-promise": "latest",
-        "gitlog": "latest",
-        "json-fs-store": "latest",
-        "mime": "latest",
-        "mmmagic": "latest",
-        "nodemailer": "latest",
-        "runtypes": "latest",
-        "sha3": "latest",
-        "ts-node": "^7.0.1",
-        "typescript": "^3.1.6",
-        "uuid": "latest",
-        "ws": "latest"
-    },
-    "devDependencies": {
-        "@types/atob": "^2.1.1",
-        "@types/btoa": "^1.2.0",
-        "@types/bunyan": "^1.8.5",
-        "@types/connect": "^3.4.32",
-        "@types/crypto-js": "^3.1.43",
-        "@types/fs-extra-promise": "^1.0.7",
-        "@types/mime": "^2.0.0",
-        "@types/mmmagic": "^0.4.29",
-        "@types/nodemailer": "^4.6.5",
-        "@types/uuid": "^3.4.4",
-        "@types/ws": "^6.0.1",
-        "nodemon": "^1.18.6"
-    },
-    "scripts": {
-        "dev": "nodemon | bunyan -o short",
-        "start": "ts-node | bunyan -o short"
-    }
+    "name":  "@buildr/server",
+    "version":  "0.1.6",
+    "private":  true,
+    "main":  "lib/index.ts",
+    "dependencies":  {
+                         "atob":  "latest",
+                         "btoa":  "latest",
+                         "bunyan":  "latest",
+                         "callsite-record":  "latest",
+                         "connect":  "latest",
+                         "crypto-js":  "latest",
+                         "fs-extra-promise":  "latest",
+                         "gitlog":  "latest",
+                         "json-fs-store":  "latest",
+                         "mime":  "latest",
+                         "mmmagic":  "latest",
+                         "nodemailer":  "latest",
+                         "runtypes":  "latest",
+                         "sha3":  "latest",
+                         "ts-node":  "^7.0.1",
+                         "typescript":  "^3.1.6",
+                         "uuid":  "latest",
+                         "ws":  "latest"
+                     },
+    "devDependencies":  {
+                            "@types/atob":  "^2.1.1",
+                            "@types/btoa":  "^1.2.0",
+                            "@types/bunyan":  "^1.8.5",
+                            "@types/connect":  "^3.4.32",
+                            "@types/crypto-js":  "^3.1.43",
+                            "@types/fs-extra-promise":  "^1.0.7",
+                            "@types/mime":  "^2.0.0",
+                            "@types/mmmagic":  "^0.4.29",
+                            "@types/nodemailer":  "^4.6.5",
+                            "@types/uuid":  "^3.4.4",
+                            "@types/ws":  "^6.0.1",
+                            "nodemon":  "^1.18.6"
+                        },
+    "scripts":  {
+                    "dev":  "nodemon | bunyan -o short",
+                    "start":  "ts-node | bunyan -o short"
+                }
 }
