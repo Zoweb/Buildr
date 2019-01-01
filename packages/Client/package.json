@@ -1,5 +1,7 @@
 {
-    "name": "@buildit/client",
+    "name": "@buildr/client",
+    "version": "0.1.3",
+    "private": true,
     "dependencies": {
         "@browser-bunyan/console-formatted-stream": "latest",
         "browser-bunyan": "latest",
