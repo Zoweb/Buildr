@@ -20,4 +20,4 @@ deploy:
     - provider: heroku
       skip_cleanup: true
       api_key: "$HEROKU_TOKEN"
-      master: buildr-backend
+      app: buildr-backend
