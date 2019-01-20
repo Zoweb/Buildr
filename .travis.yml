@@ -19,6 +19,7 @@ deploy:
       local-dir: packages/Client/dist
       fqdn: buildr.zoweb.me
     - provider: heroku
+      skip_cleanup: true
       api_key: "$HEROKU_TOKEN"
       app: buildr-backend
       run: "yarn install"
