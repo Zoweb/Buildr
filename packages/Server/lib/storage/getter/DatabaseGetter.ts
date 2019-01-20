@@ -51,7 +51,7 @@ export default class DatabaseGetter extends ConfigurationSection {
         logger.trace("Type of result:", typeof result, "(", result, ")");
 
         // check if this is an environment variable
-        if (result.type === "env") {
+        if (result && result.type === "env") {
             logger.trace("Getting data from environment variable,", result.variable);
             if (typeof result.variable !== "string") throw new TypeError("Environment option must have `variable` key");
             const variableName = result.variable;
