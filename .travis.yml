@@ -3,12 +3,12 @@ node_js:
     - "node"
     - "lts/*"
 addons:
-  firefox: latest
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
+    firefox: latest
+    apt:
+        sources:
+            - google-chrome
+        packages:
+            - google-chrome-stable
 before_deploy: yarn run build
 deploy:
     - provider: pages
@@ -17,7 +17,8 @@ deploy:
       target-branch: master
       repo: BuildrApp/BuildrApp.github.io
       local-dir: packages/Client/dist
+      fqdn: buildr.zoweb.me
     - provider: heroku
       api_key: "$HEROKU_TOKEN"
       app: buildr-backend
-      local-dir: packages/Server
+        #local-dir: packages/Server
