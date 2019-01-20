@@ -35,4 +35,22 @@ export default class JsonGetter extends ConfigurationSection {
         super(rootPath);
         this.source = source;
     }
+
+    checkContains(path: Path): Promise<boolean> {
+        return new Promise(yay => yay(typeof this.getData(path) !== "undefined"));
+    }
+
+    get(path: Path | string): ConfigurationSection {
+        return new JsonGetter(this.source, this.rootPath.append(path));
+    }
+
+    remove(path: Path | string): Promise<void> {
+        // TODO implement
+        return Promise.reject();
+    }
+
+    async size(path: Path | string): Promise<number> {
+        if (typeof path === "string") path = new Path(path);
+        return Object.keys(await this.getData(path)).length;
+    }
 }

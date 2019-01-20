@@ -1,11 +1,11 @@
 export default class Exception extends Error {
     private static _exceptions: Exception[] = [];
-    public static get(id: number): Exception {
+    public static get(id: string): Exception {
         return this._exceptions[id] || null;
     }
 
     public readonly data: any = {};
-    public readonly id: number;
+    public readonly id: string | number;
     public readonly info: string;
 
     public constructor(message?: string, info?: string) {
