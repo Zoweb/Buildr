@@ -7,15 +7,19 @@
             "protocol": "http",
             "name": "192.168.1.29",
             "port": {
-                "public": 6223,
-                "private": 6223
+                "public": 80,
+                "private": {
+                    "type": "env",
+                    "variable": "PORT",
+                    "default": 6223
+                }
             }
         },
         "frontend": {
             "protocol": "http",
             "name": "192.168.1.29",
             "port": {
-                "public": 1234,
+                "public": 80,
                 "private": 1234
             }
         }
