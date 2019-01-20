@@ -1,6 +1,6 @@
 {
     "name":  "@buildr/server",
-    "version":  "0.1.14",
+    "version":  "0.1.15",
     "private":  true,
     "main":  "lib/index.ts",
     "dependencies":  {
@@ -40,6 +40,7 @@
                         },
     "scripts":  {
                     "dev":  "nodemon | bunyan -o short",
-                    "start":  "ts-node lib/index.ts | bunyan -o short"
+                    "build":  "tsc",
+                    "start":  "node lib/index | bunyan -o short"
                 }
 }
