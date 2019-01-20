@@ -21,4 +21,4 @@ deploy:
     - provider: heroku
       api_key: "$HEROKU_TOKEN"
       app: buildr-backend
-        #local-dir: packages/Server
+      run: "yarn install"
