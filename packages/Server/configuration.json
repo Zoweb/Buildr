@@ -5,7 +5,7 @@
     "host": {
         "backend": {
             "protocol": "http",
-            "name": "192.168.1.29",
+            "name": "buildr.zoweb.me",
             "port": {
                 "public": 80,
                 "private": {
@@ -17,7 +17,7 @@
         },
         "frontend": {
             "protocol": "http",
-            "name": "192.168.1.29",
+            "name": "buildr-backend.herokuapp.com",
             "port": {
                 "public": 80,
                 "private": 1234
