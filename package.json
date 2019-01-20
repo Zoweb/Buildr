@@ -10,7 +10,7 @@
                     "test":  "lerna run test --stream",
                     "format":  "prettier --write ./packages/**/*.ts",
                     "lint":  "prettier --list-different ./packages/**/*.ts",
-                    "start":  "lerna run start"
+                    "start":  "lerna run start --parallel"
     },
     "dependencies": {
         "lerna":  "^3.8.0"
