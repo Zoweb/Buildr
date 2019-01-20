@@ -53,7 +53,7 @@ const run = async function() {
     }
 
     // start http server
-    const httpServer = app.listen(await optionsDb.getNumber("host.backend.port.private"));
+    const httpServer = app.listen(parseInt(await optionsDb.getString("host.backend.port.private")));
 
     app.use("/action/login", async (req: http.IncomingMessage, res: http.ServerResponse) => {
         const urlParsed = url.parse(req.url, true);
