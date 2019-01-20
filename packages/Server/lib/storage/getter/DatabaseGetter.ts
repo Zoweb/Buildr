@@ -49,6 +49,20 @@ export default class DatabaseGetter extends ConfigurationSection {
         const data = JSON.parse(await readFileAsync(filePath.path, "utf8")).value;
         const result = filePath.missedPaths.reduce((prev, curr) => curr.getFrom(prev), data);
         logger.trace("Type of result:", typeof result, "(", result, ")");
+
+        // check if this is an environment variable
+        if (result.type === "env") {
+            logger.trace("Getting data from environment variable,", result.variable);
+            if (typeof result.variable !== "string") throw new TypeError("Environment option must have `variable` key");
+            const variableName = result.variable;
+            let value = process.env[variableName];
+            if (typeof value === "undefined") {
+                logger.trace("Value did not exist, getting default");
+                value = result.default;
+            }
+            return value;
+        }
+
         return result;
     }
 
