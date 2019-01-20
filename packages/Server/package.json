@@ -40,6 +40,7 @@
                         },
     "scripts":  {
                     "dev":  "nodemon | bunyan -o short",
-                    "start":  "ts-node lib/index.ts | bunyan -o short"
+        "build": "tsc",
+                    "start":  "node lib/index | bunyan -o short"
                 }
 }
