@@ -11,7 +11,7 @@
                 "private": {
                     "type": "env",
                     "variable": "PORT",
-                    "default": 6223
+                    "default": "6223"
                 }
             }
         },
