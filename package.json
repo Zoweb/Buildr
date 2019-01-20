@@ -1,6 +1,6 @@
 {
     "name":  "buildr",
-    "version":  "0.1.13",
+    "version":  "0.1.14",
     "private":  true,
     "license":  "MIT",
     "scripts":  {
@@ -11,10 +11,10 @@
                     "format":  "prettier --write ./packages/**/*.ts",
                     "lint":  "prettier --list-different ./packages/**/*.ts",
                     "start":  "lerna run start --parallel"
-    },
-    "dependencies": {
-        "lerna":  "^3.8.0"
-    },
+                },
+    "dependencies":  {
+                         "lerna":  "^3.8.0"
+                     },
     "devDependencies":  {
                             "prettier":  "1.15.3"
                         }
