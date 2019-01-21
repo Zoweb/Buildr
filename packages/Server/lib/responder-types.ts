@@ -24,7 +24,8 @@ export const RepositoryCreate = Record({
 
 export const RepositoryGetFiles = Record({
     repoName: String,
-    repoPath: String
+    repoPath: String,
+    branch: String
 });
 
 export const RepositoryList = Record({
@@ -38,6 +39,10 @@ export const RepositoryFileContents = Record({
 
 export const RepositoryGetName = Record({
     assumedName: String
+});
+
+export const RepositoryGetBranchList = Record({
+    repoName: String
 });
 
 export const Resource = Record({
