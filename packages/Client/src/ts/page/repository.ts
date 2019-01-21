@@ -112,8 +112,8 @@ async function runPage(client: ResourceClient) {
     });
 
     console.debug("Setting button URLs");
+    (document.getElementById("issues-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/issues/`;
     (document.getElementById("create-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/create/`;
-    (document.getElementById("commits-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/commits`;
     (document.getElementById("branches-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/branches/*controllers`;
     (document.getElementById("code-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/dir/`;
 
