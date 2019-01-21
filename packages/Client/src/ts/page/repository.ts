@@ -2,8 +2,10 @@ import moment from "moment";
 
 import main from "./main";
 import {
+    IRepositoryBranch,
+    IRepositoryBranchList,
     IRepositoryGetFiles,
-    IRepositoryGetFiles_File,
+    IRepositoryGetFiles_File, RepositoryBranchList,
     RepositoryFileContents,
     RepositoryGetFiles
 } from "../getter-types";
@@ -45,22 +47,31 @@ const codeHighlightExtension = () => {
     ]
 };
 
+function parseHash(hash = location.hash) {
+    console.debug("Parsing hash:", hash);
+    const repoName = hash.substring(1, (hash.indexOf("/") + 1 || hash.length + 1) - 1);
+    const branchName = hash.indexOf("*") !== -1 && hash.indexOf(":") !== -1 ? hash.substring(hash.indexOf("*") + 1, hash.indexOf(":")) : "master";
+    const path = hash.indexOf("/", hash.indexOf(":")) !== -1 ? hash.substr(hash.indexOf("/", hash.indexOf(":"))) : "/";
+
+    return {
+        repoName: decodeURIComponent(repoName),
+        branchName: decodeURIComponent(branchName),
+        path: decodeURIComponent(path)
+    };
+}
+
 (async function() {
     if (location.hash.length < 5) location.assign("/index.html");
 
     const {client} = await main();
 
+    const {repoName: pathRepoName} = parseHash();
+
     const repoName = await client.get("repository:get-name", {
-        assumedName: location.hash.substr(1).split("/")[0]
+        assumedName: pathRepoName
     }).catch(() => location.replace("/404.html"));
 
     console.debug("Found real repository name:", repoName);
-
-    console.debug("Setting button URLs");
-    (document.getElementById("issues-button") as HTMLAnchorElement).href = `#${repoName}/issues`;
-    (document.getElementById("commits-button") as HTMLAnchorElement).href = `#${repoName}/commits`;
-    (document.getElementById("branches-button") as HTMLAnchorElement).href = `#${repoName}/branches`;
-    (document.getElementById("code-button") as HTMLAnchorElement).href = `#${repoName}/dir/`;
 
     console.debug("Getting information for repository", repoName);
 
@@ -79,44 +90,49 @@ const codeHighlightExtension = () => {
     $repoName.textContent = repoName;
     $repoName.href = `#${repoName}`;
 
-    await runPage(client, repoName);
+    await runPage(client);
 
-    addEventListener("hashchange", () => runPage(client, repoName));
+    onhashchange = () => runPage(client);
 
 })().catch(err => {
     console.error(err);
 });
 
-async function runPage(client: ResourceClient, repoName: string) {
-    let repoPath: string;
-    if (location.hash.indexOf("/") === -1) repoPath = "";
-    else repoPath = location.hash.substr(location.hash.indexOf("/"));
+async function runPage(client: ResourceClient) {
+    const {repoName: pathRepoName, branchName, path: repoPath} = parseHash();
 
-    repoPath = decodeURIComponent(repoPath);
+    const repoName = await client.get("repository:get-name", {
+        assumedName: pathRepoName
+    }).catch(() => location.replace("/404.html"));
 
     console.log("Info:", {
         repoName,
+        branchName,
         repoPath
     });
 
-    if (repoPath.length === 0) {
-        await runFileDisplay(client, "README.md", repoName, true);
-    }
+    console.debug("Setting button URLs");
+    (document.getElementById("create-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/create/`;
+    (document.getElementById("commits-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/commits`;
+    (document.getElementById("branches-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/branches/*controllers`;
+    (document.getElementById("code-button") as HTMLAnchorElement).href = `#${repoName}/*${branchName}:/dir/`;
 
-    if (repoPath.startsWith("/dir/")) {
-        await runDirectoryDisplay(client, repoPath.substr("/dir/".length), repoName);
-    }
-
-    if (repoPath.startsWith("/file/")) {
-        await runFileDisplay(client, repoPath.substr("/file/".length), repoName, false);
-    }
-
-    if (repoPath.startsWith("/error/")) {
+    if (repoPath === "/") {
+        await runFileDisplay(client, "README.md", repoName, branchName, true);
+    } else if (repoPath.startsWith("/dir/")) {
+        await runDirectoryDisplay(client, repoPath.substr("/dir/".length), branchName, repoName);
+    } else if (repoPath.startsWith("/file/")) {
+        await runFileDisplay(client, repoPath.substr("/file/".length), repoName, branchName, false);
+    } else if (repoPath.startsWith("/error/")) {
         await runErrorDisplay(client, repoName, repoPath.substr("/error/".length));
+    } else if (repoPath.startsWith("/branches/")) {
+        await runBranchDisplay(client, repoName, repoPath.substr("/branches/".length), branchName);
+    } else {
+        await runErrorDisplay(client, repoName, "404");
     }
 }
 
-async function getRepoFiles(client: ResourceClient, repoPath: string, repoName: string) {
+async function getRepoFiles(client: ResourceClient, repoPath: string, branch: string, repoName: string) {
     console.debug("Repo info:", {
         repoName,
         repoPath
@@ -124,7 +140,8 @@ async function getRepoFiles(client: ResourceClient, repoPath: string, repoName: 
 
     const files: IRepositoryGetFiles = await client.getTyped(RepositoryGetFiles, "repository:get-files", {
         repoName,
-        repoPath
+        repoPath,
+        branch
     }).catch(() => location.replace("/404.html"));
 
     files.files.reverse();
@@ -171,19 +188,24 @@ async function getRepoFiles(client: ResourceClient, repoPath: string, repoName: 
     return fileList.concat(uniqueFolderList);
 }
 
-async function runDirectoryDisplay(client: ResourceClient, repoPath: string, repoName: string) {
+async function runDirectoryDisplay(client: ResourceClient, repoPath: string, branch: string, repoName: string) {
     const filesSection = document.getElementById("contents");
 
-    const allFilesList = await getRepoFiles(client, repoPath, repoName);
+    const allFilesList = await getRepoFiles(client, repoPath, branch, repoName);
 
     filesSection.textContent = "";
 
     if (allFilesList.length === 0) {
         const noFilesElement = document.createElement("div");
-        noFilesElement.classList.add("file-link");
+        noFilesElement.classList.add("contents-section");
         noFilesElement.classList.add("info");
         noFilesElement.textContent = "No files found in the repository.";
         filesSection.appendChild(noFilesElement);
+    } else {
+        const directoryNameElement = document.createElement("div");
+        directoryNameElement.classList.add("contents-section");
+        directoryNameElement.textContent = "/" + repoPath;
+        filesSection.appendChild(directoryNameElement);
     }
 
     for (const file of allFilesList) {
@@ -226,7 +248,7 @@ async function runDirectoryDisplay(client: ResourceClient, repoPath: string, rep
     }
 }
 
-async function runFileDisplay(client: ResourceClient, path: string, repoName: string, isRoot: boolean) {
+async function runFileDisplay(client: ResourceClient, path: string, repoName: string, branch: string, isRoot: boolean) {
     const $contents = document.getElementById("contents");
     const $header = document.createElement("div");
     $header.className = "contents-section";
@@ -238,7 +260,7 @@ async function runFileDisplay(client: ResourceClient, path: string, repoName: st
 
     $header.appendChild($headerFileName);
 
-    const files = await getRepoFiles(client, path.substr(0, path.lastIndexOf("/") + 1), repoName);
+    const files = await getRepoFiles(client, path.substr(0, path.lastIndexOf("/") + 1), branch, repoName);
 
     console.log(files);
 
@@ -327,6 +349,125 @@ async function runErrorDisplay(client: ResourceClient, name: string, type: strin
 
     $section.appendChild($header);
     $section.appendChild($secondary);
+}
+
+function renderBranchList(root: HTMLElement, repoName: string, path: string, selectedBranch: string, targetLinkPath: string, branches: IRepositoryBranch[], removeFromStart: number = 1) {
+    const display = document.createElement("div");
+    display.classList.add("branch-display");
+    root.appendChild(display);
+
+    const pathLength = path.length + removeFromStart;
+
+    const shownBranches = [];
+
+    console.log("path:", path);
+    console.log("branches:", branches);
+
+    for (const branch of branches) {
+        const branchPathSubstring = branch.name.substr(0, (branch.name.indexOf("/", pathLength) + 1 || branch.name.length + 1) - 1);
+        const currentBranchSubstring = selectedBranch.substr(0, (selectedBranch.indexOf("/", pathLength) + 1 || selectedBranch.length + 1) - 1);
+
+        if (branch.name.substr(pathLength - 1, 1) !== "/") continue;
+
+        console.log(branch.name, branch.name.substr(pathLength - 1), branchPathSubstring, currentBranchSubstring);
+
+        if (shownBranches.indexOf(branchPathSubstring) !== -1) continue;
+        shownBranches.push(branchPathSubstring);
+
+        const $el = document.createElement("a");
+        $el.classList.add("item");
+        $el.textContent = branchPathSubstring.substr(pathLength);
+        display.appendChild($el);
+
+        if (branchPathSubstring === currentBranchSubstring) $el.classList.add("current");
+
+        if (branch.name.substr(pathLength).indexOf("/") !== -1) {
+            if (branchPathSubstring === currentBranchSubstring)
+                renderBranchList(root, repoName, branchPathSubstring, selectedBranch, targetLinkPath, branches.filter(it => it.name.startsWith(branchPathSubstring)), removeFromStart);
+
+            $el.href = `#${repoName}/*${branch.name}:/branches/${targetLinkPath}`;
+        } else {
+            $el.href = `#${repoName}/*${branch.name}:`;
+        }
+    }
+}
+
+async function runBranchDisplay(client: ResourceClient, repoName: string, path: string, branchName: string) {
+    const {branches}: IRepositoryBranchList = await client.getTyped(RepositoryBranchList, "repository:get-branch-list", {
+        repoName
+    });
+
+    const $contents = document.getElementById("contents");
+    $contents.textContent = "";
+
+    const $cRoot = document.createElement("div");
+    $cRoot.classList.add("branches");
+
+    $contents.appendChild($cRoot);
+
+    const sidebar = document.createElement("div");
+    sidebar.classList.add("branch-display");
+
+    const featuresButton = document.createElement("a");
+    featuresButton.classList.add("item");
+    featuresButton.textContent = "Features";
+    featuresButton.href = `#${repoName}/*${branchName}:/branches/feature`;
+    if (path.startsWith("feature")) featuresButton.classList.add("highlighted");
+    sidebar.appendChild(featuresButton);
+
+    const hotfixesButton = document.createElement("a");
+    hotfixesButton.classList.add("item");
+    hotfixesButton.textContent = "Hotfixes";
+    hotfixesButton.href = `#${repoName}/*${branchName}:/branches/hotfix`;
+    if (path.startsWith("hotfix")) hotfixesButton.classList.add("highlighted");
+    sidebar.appendChild(hotfixesButton);
+
+    const coldfixesButton = document.createElement("a");
+    coldfixesButton.classList.add("item");
+    coldfixesButton.textContent = "Coldfixes";
+    coldfixesButton.href = `#${repoName}/*${branchName}:/branches/coldfix`;
+    if (path.startsWith("coldfix")) coldfixesButton.classList.add("highlighted");
+    sidebar.appendChild(coldfixesButton);
+
+    const controllersButton = document.createElement("a");
+    controllersButton.classList.add("item");
+    controllersButton.textContent = "Controllers";
+    controllersButton.href = `#${repoName}/*${branchName}:/branches/*controllers`;
+    if (path === "*controllers") controllersButton.classList.add("highlighted");
+    sidebar.appendChild(controllersButton);
+
+    $cRoot.appendChild(sidebar);
+
+    console.debug("Path:", path);
+
+    const branchesToDisplay = path === "*controllers" ?
+        branches.filter(it => [
+            "master",
+            "develop",
+            "dev"
+        ].indexOf(it.name) !== -1) :
+        branches.filter(it => it.name.startsWith(path));
+
+    console.debug("All Branches:\n", ...branches.map(it => it.name + "\n"));
+    console.debug("Display Branches:\n", ...branchesToDisplay.map(it => it.name + "\n"));
+
+    renderBranchList($cRoot, repoName, path === "*controllers" ? "" : path, branchName, path, branchesToDisplay, path === "*controllers" ? 0 : 1);
+
+    /*
+    const branchDisplay = document.createElement("div");
+    branchDisplay.classList.add("branch-display");
+    $cRoot.appendChild(branchDisplay);
+
+    for (const branch of branchesToDisplay) {
+        const $el = document.createElement("a");
+        $el.href = `#${repoName}/*${branch.name}:`;
+        $el.classList.add("item");
+        $el.textContent = branch.name.substr(path.length);
+
+        if (branchName === branch.name) $el.classList.add("current");
+
+        branchDisplay.appendChild($el);
+    }*/
 }
 
 async function render(client: ResourceClient, output: HTMLElement, path: string, content: string, repoName: string) {
