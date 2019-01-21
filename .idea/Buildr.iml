@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/Client/.cache" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/Client/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/Server/data/dbs" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>
