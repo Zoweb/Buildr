@@ -6,11 +6,29 @@ import {Record} from "runtypes";
 const logger = Logger.create("ResourceClient");
 
 export default class ResourceClient {
+    private static getCacheName(event: string, data: Stringifyable) {
+        return `NAME=${event};DATA=${JSON.stringify(data)}`;
+    }
+
+    private _cache: {[data: string]: Stringifyable} = {};
+
     private _authWaiters: {yay: Function, nay: Function}[] = [];
 
     authCode: string = null;
     connection: SocketClient;
     language: string = "en";
+
+    private getCacheValue(cacheName: string) {
+        return this._cache[cacheName];
+    }
+
+    private setCacheValue(cacheName: string, response: Stringifyable) {
+        this._cache[cacheName] = response;
+    }
+
+    private cacheContains(cacheName: string) {
+        return typeof this._cache[cacheName] !== "undefined";
+    }
 
     connect(host: string, port: number, path: string = "", secure: boolean = false) {
         const url = `ws${secure ? "s" : ""}://${host}:${port}/${path}`;
@@ -43,10 +61,19 @@ export default class ResourceClient {
     }
 
     get(event: string, data?: Stringifyable, timeout?: number) {
-        return this.connection.get(event, {
+        const cacheName = ResourceClient.getCacheName(event, data);
+        if (this.cacheContains(cacheName)) {
+            console.debug("Got cache hit for", event);
+            return this.getCacheValue(cacheName);
+        }
+        console.debug("Got cache miss for", event);
+
+        const response = this.connection.get(event, {
             authCode: this.authCode,
             data
         }, timeout);
+        this.setCacheValue(cacheName, response);
+        return response;
     }
 
     async getTyped(type: Record<any>, event: string, data?: Stringifyable, timeout?: number): Promise<Stringifyable> {
