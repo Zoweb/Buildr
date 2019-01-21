@@ -15,6 +15,7 @@ import {
 import ServiceRequestData from "./ServiceRequestData";
 import {exec, spawn} from "child_process";
 import Exception from "../errors/Exception";
+import BranchListItem from "./BranchListItem";
 
 const gitlog = require("gitlog");
 
@@ -296,7 +297,7 @@ export default class GitServer extends EventEmitter {
         });
     }
 
-    getRepositoryLog(repoName: string): Promise<GitLogResponse[]> {
+    getRepositoryLog(repoName: string, branch?: string): Promise<GitLogResponse[]> {
         repoName = GitServer.getRepositoryName(repoName);
         const fullDirectory = path.join(this.dataDirectory, repoName);
 
@@ -304,6 +305,7 @@ export default class GitServer extends EventEmitter {
         return new Promise((yay, nay) => {
             gitlog({
                 repo: fullDirectory,
+                branch,
                 fields: [
                     "abbrevHash",
                     "hash",
@@ -316,6 +318,47 @@ export default class GitServer extends EventEmitter {
                 else yay(commits);
             });
         });
+    }
+
+    async getBranchList(repoName: string): Promise<BranchListItem[]> {
+        repoName = GitServer.getRepositoryName(repoName);
+        const fullDirectory = path.join(this.dataDirectory, repoName);
+        const progDirectory = path.join(this.setupDirectory, "git-prog.cmd");
+
+        logger.debug("Getting branch list for", repoName);
+
+        const child = exec(`${progDirectory} branch --no-color -v --no-abbrev --format "%(HEAD)\t%(refname:short)\t%(objectname)\t%(upstream:track,nobracket)"`, {
+            cwd: fullDirectory
+        });
+
+        let data = "";
+        child.stdout.on("data", dat => data += dat);
+
+        await new Promise(yay => child.stdout.on("end", yay));
+
+        const list = [];
+
+        for (let branch of data.substr(0, data.lastIndexOf("\n")).split("\n")) {
+            const [isCurrentBranch, branchName, latestCommit, distanceFromRemote] = branch.split("\t");
+
+            logger.debug("Result:", isCurrentBranch, branchName, latestCommit, distanceFromRemote);
+
+            const [behind, ahead] = distanceFromRemote.split(", ");
+            const behindNumber = parseInt((behind || "").substr(0, "behind ".length)) || 0;
+            const aheadNumber = parseInt((ahead || "").substr(0, "ahead ".length)) || 0;
+
+            const item = new BranchListItem(
+                isCurrentBranch === "*",
+                branchName,
+                latestCommit,
+                behindNumber,
+                aheadNumber
+            );
+
+            list.push(item);
+        }
+
+        return list;
     }
 
     async readFile(repoName: string, fileHash: string, fileName: string) {
@@ -338,8 +381,6 @@ export default class GitServer extends EventEmitter {
         child.stdout.on("data", dat => data += dat);
 
         await new Promise(yay => child.stdout.on("end", yay));
-        console.log("DATA LENGTH:", data.length);
-        console.log(data.substr(0, 500));
         logger.debug("Process has exited.");
 
         return data;

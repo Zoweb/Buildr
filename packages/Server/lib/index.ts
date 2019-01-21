@@ -1,3 +1,4 @@
+require("longjohn");
 import * as crypto from "crypto";
 import {Logger} from "./getLogger";
 import Exception from "./errors/Exception";
@@ -17,7 +18,7 @@ import AuthenticatedSocket from "./socket/AuthenticatedSocket";
 import * as mime from "mime";
 import * as mmmagic from "mmmagic";
 import {
-    RepositoryCreate, RepositoryFileContents,
+    RepositoryCreate, RepositoryFileContents, RepositoryGetBranchList,
     RepositoryGetFiles, RepositoryGetName, RepositoryList,
     Resource,
     UsernameFieldUpdate
@@ -294,7 +295,7 @@ const run = async function() {
 
             // get source files of repository
             return {
-                files: await gitServer.getRepositoryLog(data["repoName"])
+                files: await gitServer.getRepositoryLog(data["repoName"], data["branch"])
             };
         });
 
@@ -315,6 +316,17 @@ const run = async function() {
 
         authClient.respondWithoutUserCheck(RepositoryList, "repository:list", (authCode, data) => {
             return gitServer.listRepositories();
+        });
+
+        authClient.respond(RepositoryGetBranchList, "repository:get-branch-list", async (user, data) => {
+            const repoOwner = await gitDb.get(data["repoName"]).getString("creator");
+
+            if (repoOwner === user.email && !await user.hasPermission("git.repo.mine.read")) throw new AuthenticationException("Not enough permissions");
+            if (repoOwner !== user.email && !await user.hasPermission("git.repo.others.read")) throw new AuthenticationException("Not enough permissions");
+
+            return {
+                branches: await gitServer.getBranchList(data["repoName"])
+            }
         });
 
         authClient.respondWithoutUserCheck(Resource, "resource", (authCode, data) => {
